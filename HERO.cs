@@ -392,11 +392,11 @@ internal class HERO : MonoBehaviour
     this.needLean = false;
     if (!this.useGun && this.state == HERO_STATE.Attack && this.attackAnimation != "attack3_1" && this.attackAnimation != "attack3_2" && !this.IsFiringThunderSpear())
     {
-      double y = (double) ((Component) this).rigidbody.velocity.y;
-      double x = (double) ((Component) this).rigidbody.velocity.x;
+      float y = ((Component) this).rigidbody.velocity.y;
+      float x = ((Component) this).rigidbody.velocity.x;
       float z = ((Component) this).rigidbody.velocity.z;
-      double num2 = (double) Mathf.Sqrt((float) (x * x + (double) z * (double) z));
-      this.targetRotation = Quaternion.Euler((float) (-(double) (Mathf.Atan2((float) y, (float) num2) * 57.29578f) * (1.0 - (double) Vector3.Angle(((Component) this).rigidbody.velocity, ((Component) this).transform.forward) / 90.0)), this.facingDirection, 0.0f);
+      float num2 = Mathf.Sqrt((float) ((double) x * (double) x + (double) z * (double) z));
+      this.targetRotation = Quaternion.Euler((float) (-(double) (Mathf.Atan2(y, num2) * 57.29578f) * (1.0 - (double) Vector3.Angle(((Component) this).rigidbody.velocity, ((Component) this).transform.forward) / 90.0)), this.facingDirection, 0.0f);
       if ((!this.isLeftHandHooked || !Object.op_Inequality((Object) this.bulletLeft, (Object) null)) && (!this.isRightHandHooked || !Object.op_Inequality((Object) this.bulletRight, (Object) null)))
         return;
       ((Component) this).transform.rotation = this.targetRotation;
@@ -732,8 +732,7 @@ internal class HERO : MonoBehaviour
     LayerMask layerMask2 = LayerMask.op_Implicit(1 << PhysicsLayer.Ground);
     LayerMask layerMask3 = LayerMask.op_Implicit(1 << PhysicsLayer.EnemyBox);
     LayerMask layerMask4 = LayerMask.op_Implicit(LayerMask.op_Implicit(layerMask1) | LayerMask.op_Implicit(layerMask2) | LayerMask.op_Implicit(layerMask3));
-    int num1 = ((LayerMask) ref layerMask4).value;
-    RaycastHit[] raycastHitArray = Physics.RaycastAll(ray, 180f, num1);
+    RaycastHit[] raycastHitArray = Physics.RaycastAll(ray, 180f, ((LayerMask) ref layerMask4).value);
     List<RaycastHit> raycastHitList = new List<RaycastHit>();
     List<TITAN> titanList = new List<TITAN>();
     for (int index = 0; index < raycastHitArray.Length; ++index)
@@ -742,7 +741,7 @@ internal class HERO : MonoBehaviour
       raycastHitList.Add(raycastHit);
     }
     raycastHitList.Sort((Comparison<RaycastHit>) ((x, y) => ((RaycastHit) ref x).distance.CompareTo(((RaycastHit) ref y).distance)));
-    float num2 = 180f;
+    float num = 180f;
     for (int index = 0; index < raycastHitList.Count; ++index)
     {
       RaycastHit raycastHit1 = raycastHitList[index];
@@ -753,10 +752,10 @@ internal class HERO : MonoBehaviour
         {
           RaycastHit raycastHit2;
           RaycastHit raycastHit3 = raycastHit2 = raycastHitList[index];
-          if ((double) ((RaycastHit) ref raycastHit3).distance < (double) num2)
+          if ((double) ((RaycastHit) ref raycastHit3).distance < (double) num)
           {
-            num2 -= 60f;
-            if ((double) num2 <= 60.0)
+            num -= 60f;
+            if ((double) num <= 60.0)
               index = raycastHitList.Count;
             TITAN component = ((Component) gameObject.transform.root).gameObject.GetComponent<TITAN>();
             if (Object.op_Inequality((Object) component, (Object) null))
@@ -835,7 +834,7 @@ internal class HERO : MonoBehaviour
   {
     if ((double) this.dashTime > 0.0 || (double) this.currentGas <= 0.0 || this.isMounted || (double) this._dashCooldownLeft > 0.0)
       return;
-    this.useGas(this.totalGas * 0.04f);
+    this.useGas(this.totalGas * -0.04f);
     this.facingDirection = this.getGlobalFacingDirection(horizontal, vertical);
     this.dashV = this.getGlobaleFacingVector3(this.facingDirection);
     this.originVM = this.currentSpeed;
@@ -1306,11 +1305,11 @@ internal class HERO : MonoBehaviour
               }
               else
               {
-                int num5 = (double) Mathf.Abs(this.baseRigidBody.velocity.x) + (double) Mathf.Abs(this.baseRigidBody.velocity.z) > 25.0 ? 1 : 0;
-                bool flag4 = (double) this.baseRigidBody.velocity.y < 0.0;
-                if (num5 == 0)
+                bool flag4 = (double) Mathf.Abs(this.baseRigidBody.velocity.x) + (double) Mathf.Abs(this.baseRigidBody.velocity.z) > 25.0;
+                bool flag5 = (double) this.baseRigidBody.velocity.y < 0.0;
+                if (!flag4)
                 {
-                  if (flag4)
+                  if (flag5)
                   {
                     if (!this.baseAnimation.IsPlaying("air_fall"))
                       this.crossFade("air_fall", 0.2f);
@@ -1320,21 +1319,21 @@ internal class HERO : MonoBehaviour
                 }
                 else if (!this.isLeftHandHooked && !this.isRightHandHooked)
                 {
-                  double num6 = -(double) Mathf.Atan2(this.baseRigidBody.velocity.z, this.baseRigidBody.velocity.x) * 57.295780181884766;
+                  double num5 = -(double) Mathf.Atan2(this.baseRigidBody.velocity.z, this.baseRigidBody.velocity.x) * 57.295780181884766;
                   Quaternion rotation = this.baseTransform.rotation;
-                  double num7 = (double) ((Quaternion) ref rotation).eulerAngles.y - 90.0;
-                  float num8 = -Mathf.DeltaAngle((float) num6, (float) num7);
-                  if ((double) Mathf.Abs(num8) < 45.0)
+                  double num6 = (double) ((Quaternion) ref rotation).eulerAngles.y - 90.0;
+                  float num7 = -Mathf.DeltaAngle((float) num5, (float) num6);
+                  if ((double) Mathf.Abs(num7) < 45.0)
                   {
                     if (!this.baseAnimation.IsPlaying("air2"))
                       this.crossFade("air2", 0.2f);
                   }
-                  else if ((double) num8 < 135.0 && (double) num8 > 0.0)
+                  else if ((double) num7 < 135.0 && (double) num7 > 0.0)
                   {
                     if (!this.baseAnimation.IsPlaying("air2_right"))
                       this.crossFade("air2_right", 0.2f);
                   }
-                  else if ((double) num8 > -135.0 && (double) num8 < 0.0)
+                  else if ((double) num7 > -135.0 && (double) num7 < 0.0)
                   {
                     if (!this.baseAnimation.IsPlaying("air2_left"))
                       this.crossFade("air2_left", 0.2f);
@@ -1452,45 +1451,36 @@ internal class HERO : MonoBehaviour
           this.spinning = false;
           if (flag2 & flag3)
           {
-            float num9 = this.currentSpeed + 0.1f;
+            float num8 = this.currentSpeed + 0.1f;
             this.baseRigidBody.AddForce(Vector3.op_UnaryNegation(this.baseRigidBody.velocity), (ForceMode) 2);
             Vector3 vector3_11 = Vector3.op_Subtraction(Vector3.op_Multiply(Vector3.op_Addition(this.bulletRight.transform.position, this.bulletLeft.transform.position), 0.5f), this.baseTransform.position);
-            float num10 = 1f + Mathf.Clamp(this.GetReelAxis(), -0.8f, 0.8f);
-            Vector3 velocity3 = this.baseRigidBody.velocity;
-            double num11 = 1.5393799543380737 * (double) num10;
-            double num12 = 1.5393799543380737 * (double) num10;
-            Vector3 vector3_12 = Vector3.RotateTowards(vector3_11, velocity3, (float) num11, (float) num12);
+            float num9 = 1f + Mathf.Clamp(this.GetReelAxis(), -0.8f, 0.8f);
+            Vector3 vector3_12 = Vector3.RotateTowards(vector3_11, this.baseRigidBody.velocity, 1.53938f * num9, 1.53938f * num9);
             ((Vector3) ref vector3_12).Normalize();
             this.spinning = true;
-            this.baseRigidBody.velocity = Vector3.op_Multiply(vector3_12, num9);
+            this.baseRigidBody.velocity = Vector3.op_Multiply(vector3_12, num8);
           }
           else if (flag2)
           {
-            float num13 = this.currentSpeed + 0.1f;
+            float num10 = this.currentSpeed + 0.1f;
             this.baseRigidBody.AddForce(Vector3.op_UnaryNegation(this.baseRigidBody.velocity), (ForceMode) 2);
             Vector3 vector3_13 = Vector3.op_Subtraction(this.bulletLeft.transform.position, this.baseTransform.position);
-            float num14 = 1f + Mathf.Clamp(this.GetReelAxis(), -0.8f, 0.8f);
-            Vector3 velocity4 = this.baseRigidBody.velocity;
-            double num15 = 1.5393799543380737 * (double) num14;
-            double num16 = 1.5393799543380737 * (double) num14;
-            Vector3 vector3_14 = Vector3.RotateTowards(vector3_13, velocity4, (float) num15, (float) num16);
+            float num11 = 1f + Mathf.Clamp(this.GetReelAxis(), -0.8f, 0.8f);
+            Vector3 vector3_14 = Vector3.RotateTowards(vector3_13, this.baseRigidBody.velocity, 1.53938f * num11, 1.53938f * num11);
             ((Vector3) ref vector3_14).Normalize();
             this.spinning = true;
-            this.baseRigidBody.velocity = Vector3.op_Multiply(vector3_14, num13);
+            this.baseRigidBody.velocity = Vector3.op_Multiply(vector3_14, num10);
           }
           else if (flag3)
           {
-            float num17 = this.currentSpeed + 0.1f;
+            float num12 = this.currentSpeed + 0.1f;
             this.baseRigidBody.AddForce(Vector3.op_UnaryNegation(this.baseRigidBody.velocity), (ForceMode) 2);
             Vector3 vector3_15 = Vector3.op_Subtraction(this.bulletRight.transform.position, this.baseTransform.position);
-            float num18 = 1f + Mathf.Clamp(this.GetReelAxis(), -0.8f, 0.8f);
-            Vector3 velocity5 = this.baseRigidBody.velocity;
-            double num19 = 1.5393799543380737 * (double) num18;
-            double num20 = 1.5393799543380737 * (double) num18;
-            Vector3 vector3_16 = Vector3.RotateTowards(vector3_15, velocity5, (float) num19, (float) num20);
+            float num13 = 1f + Mathf.Clamp(this.GetReelAxis(), -0.8f, 0.8f);
+            Vector3 vector3_16 = Vector3.RotateTowards(vector3_15, this.baseRigidBody.velocity, 1.53938f * num13, 1.53938f * num13);
             ((Vector3) ref vector3_16).Normalize();
             this.spinning = true;
-            this.baseRigidBody.velocity = Vector3.op_Multiply(vector3_16, num17);
+            this.baseRigidBody.velocity = Vector3.op_Multiply(vector3_16, num12);
           }
           if (this.state == HERO_STATE.Attack && (this.attackAnimation == "attack5" || this.attackAnimation == "special_petra") && (double) this.baseAnimation[this.attackAnimation].normalizedTime > 0.40000000596046448 && !this.attackMove)
           {
@@ -1521,15 +1511,15 @@ internal class HERO : MonoBehaviour
             }
             this.baseRigidBody.AddForce(Vector3.op_Multiply(Vector3.up, 2f), (ForceMode) 1);
           }
-          bool flag5 = false;
+          bool flag6 = false;
           if (Object.op_Inequality((Object) this.bulletLeft, (Object) null) || Object.op_Inequality((Object) this.bulletRight, (Object) null))
           {
             if (Object.op_Inequality((Object) this.bulletLeft, (Object) null) && (double) this.bulletLeft.transform.position.y > (double) ((Component) this).gameObject.transform.position.y && this.isLaunchLeft && this.bulletLeft.GetComponent<Bullet>().isHooked())
-              flag5 = true;
+              flag6 = true;
             if (Object.op_Inequality((Object) this.bulletRight, (Object) null) && (double) this.bulletRight.transform.position.y > (double) ((Component) this).gameObject.transform.position.y && this.isLaunchRight && this.bulletRight.GetComponent<Bullet>().isHooked())
-              flag5 = true;
+              flag6 = true;
           }
-          if (flag5)
+          if (flag6)
             this.baseRigidBody.AddForce(new Vector3(0.0f, -10f * this.baseRigidBody.mass, 0.0f));
           else
             this.baseRigidBody.AddForce(new Vector3(0.0f, -this.gravity * this.baseRigidBody.mass, 0.0f));
@@ -3065,9 +3055,7 @@ internal class HERO : MonoBehaviour
       LayerMask layerMask1 = LayerMask.op_Implicit(1 << PhysicsLayer.Ground);
       LayerMask layerMask2 = LayerMask.op_Implicit(LayerMask.op_Implicit(LayerMask.op_Implicit(1 << PhysicsLayer.EnemyBox)) | LayerMask.op_Implicit(layerMask1));
       RaycastHit raycastHit1;
-      ref RaycastHit local = ref raycastHit1;
-      int num1 = ((LayerMask) ref layerMask2).value;
-      if (!Physics.Raycast(ray, ref local, 1E+07f, num1))
+      if (!Physics.Raycast(ray, ref raycastHit1, 1E+07f, ((LayerMask) ref layerMask2).value))
         return;
       Vector3 vector3_1 = Vector3.op_Subtraction(((RaycastHit) ref raycastHit1).point, this.baseTransform.position);
       float magnitude = ((Vector3) ref vector3_1).magnitude;
@@ -3101,15 +3089,15 @@ internal class HERO : MonoBehaviour
         // ISSUE: explicit constructor call
         ((Vector3) ref vector3_4).\u002Ector(0.0f, 0.4f, 0.0f);
         Vector3 vector3_5 = Vector3.op_Addition(vector3_4, Vector3.op_Multiply(this.baseTransform.right, 0.3f));
-        float num2 = (double) ((RaycastHit) ref raycastHit1).distance <= 50.0 ? ((RaycastHit) ref raycastHit1).distance * 0.05f : ((RaycastHit) ref raycastHit1).distance * 0.3f;
-        Vector3 vector3_6 = Vector3.op_Subtraction(Vector3.op_Subtraction(((RaycastHit) ref raycastHit1).point, Vector3.op_Multiply(this.baseTransform.right, num2)), Vector3.op_Addition(this.baseTransform.position, vector3_3));
-        Vector3 vector3_7 = Vector3.op_Subtraction(Vector3.op_Addition(((RaycastHit) ref raycastHit1).point, Vector3.op_Multiply(this.baseTransform.right, num2)), Vector3.op_Addition(this.baseTransform.position, vector3_5));
+        float num = (double) ((RaycastHit) ref raycastHit1).distance <= 50.0 ? ((RaycastHit) ref raycastHit1).distance * 0.05f : ((RaycastHit) ref raycastHit1).distance * 0.3f;
+        Vector3 vector3_6 = Vector3.op_Subtraction(Vector3.op_Subtraction(((RaycastHit) ref raycastHit1).point, Vector3.op_Multiply(this.baseTransform.right, num)), Vector3.op_Addition(this.baseTransform.position, vector3_3));
+        Vector3 vector3_7 = Vector3.op_Subtraction(Vector3.op_Addition(((RaycastHit) ref raycastHit1).point, Vector3.op_Multiply(this.baseTransform.right, num)), Vector3.op_Addition(this.baseTransform.position, vector3_5));
         ((Vector3) ref vector3_6).Normalize();
         ((Vector3) ref vector3_7).Normalize();
-        vector3_6 = Vector3.op_Multiply(vector3_6, 1000000f);
-        vector3_7 = Vector3.op_Multiply(vector3_7, 1000000f);
+        Vector3 vector3_8 = Vector3.op_Multiply(vector3_6, 1000000f);
+        Vector3 vector3_9 = Vector3.op_Multiply(vector3_7, 1000000f);
         RaycastHit raycastHit2;
-        if (Physics.Linecast(Vector3.op_Addition(this.baseTransform.position, vector3_3), Vector3.op_Addition(Vector3.op_Addition(this.baseTransform.position, vector3_3), vector3_6), ref raycastHit2, ((LayerMask) ref layerMask2).value))
+        if (Physics.Linecast(Vector3.op_Addition(this.baseTransform.position, vector3_3), Vector3.op_Addition(Vector3.op_Addition(this.baseTransform.position, vector3_3), vector3_8), ref raycastHit2, ((LayerMask) ref layerMask2).value))
         {
           Transform transform1 = this.crossL1.transform;
           transform1.localPosition = this.currentCamera.WorldToScreenPoint(((RaycastHit) ref raycastHit2).point);
@@ -3130,7 +3118,7 @@ internal class HERO : MonoBehaviour
             transform5.localPosition = Vector3.op_Addition(transform5.localPosition, Vector3.op_Multiply(Vector3.up, 10000f));
           }
         }
-        if (!Physics.Linecast(Vector3.op_Addition(this.baseTransform.position, vector3_5), Vector3.op_Addition(Vector3.op_Addition(this.baseTransform.position, vector3_5), vector3_7), ref raycastHit2, ((LayerMask) ref layerMask2).value))
+        if (!Physics.Linecast(Vector3.op_Addition(this.baseTransform.position, vector3_5), Vector3.op_Addition(Vector3.op_Addition(this.baseTransform.position, vector3_5), vector3_9), ref raycastHit2, ((LayerMask) ref layerMask2).value))
           return;
         Transform transform6 = this.crossR1.transform;
         transform6.localPosition = this.currentCamera.WorldToScreenPoint(((RaycastHit) ref raycastHit2).point);
@@ -3616,16 +3604,17 @@ internal class HERO : MonoBehaviour
     gameObject2.renderer.material = CharacterMaterials.materials[this.setup.myCostume._3dmg_texture];
     Vector3 vector3_1 = Vector3.op_Subtraction(Vector3.op_Addition(((Component) this).transform.forward, Vector3.op_Multiply(((Component) this).transform.up, 2f)), ((Component) this).transform.right);
     gameObject1.rigidbody.AddForce(vector3_1, (ForceMode) 1);
-    gameObject2.rigidbody.AddForce(Vector3.op_Addition(Vector3.op_Addition(((Component) this).transform.forward, Vector3.op_Multiply(((Component) this).transform.up, 2f)), ((Component) this).transform.right), (ForceMode) 1);
-    Vector3 vector3_2;
+    Vector3 vector3_2 = Vector3.op_Addition(Vector3.op_Addition(((Component) this).transform.forward, Vector3.op_Multiply(((Component) this).transform.up, 2f)), ((Component) this).transform.right);
+    gameObject2.rigidbody.AddForce(vector3_2, (ForceMode) 1);
+    Vector3 vector3_3;
     // ISSUE: explicit constructor call
-    ((Vector3) ref vector3_2).\u002Ector((float) Random.Range(-100, 100), (float) Random.Range(-100, 100), (float) Random.Range(-100, 100));
-    ((Vector3) ref vector3_2).Normalize();
-    gameObject1.rigidbody.AddTorque(vector3_2);
+    ((Vector3) ref vector3_3).\u002Ector((float) Random.Range(-100, 100), (float) Random.Range(-100, 100), (float) Random.Range(-100, 100));
+    ((Vector3) ref vector3_3).Normalize();
+    gameObject1.rigidbody.AddTorque(vector3_3);
     // ISSUE: explicit constructor call
-    ((Vector3) ref vector3_2).\u002Ector((float) Random.Range(-100, 100), (float) Random.Range(-100, 100), (float) Random.Range(-100, 100));
-    ((Vector3) ref vector3_2).Normalize();
-    gameObject2.rigidbody.AddTorque(vector3_2);
+    ((Vector3) ref vector3_3).\u002Ector((float) Random.Range(-100, 100), (float) Random.Range(-100, 100), (float) Random.Range(-100, 100));
+    ((Vector3) ref vector3_3).Normalize();
+    gameObject2.rigidbody.AddTorque(vector3_3);
     this.setup.part_blade_l.SetActive(false);
     this.setup.part_blade_r.SetActive(false);
     --this.currentBladeNum;
@@ -3890,9 +3879,7 @@ internal class HERO : MonoBehaviour
                 LayerMask layerMask1 = LayerMask.op_Implicit(1 << LayerMask.NameToLayer("Ground"));
                 LayerMask layerMask2 = LayerMask.op_Implicit(LayerMask.op_Implicit(LayerMask.op_Implicit(1 << LayerMask.NameToLayer("EnemyBox"))) | LayerMask.op_Implicit(layerMask1));
                 RaycastHit hit;
-                ref RaycastHit local = ref hit;
-                int num = ((LayerMask) ref layerMask2).value;
-                if (Physics.Raycast(ray, ref local, 1E+07f, num))
+                if (Physics.Raycast(ray, ref hit, 1E+07f, ((LayerMask) ref layerMask2).value))
                 {
                   if (Object.op_Inequality((Object) this.bulletRight, (Object) null))
                   {
@@ -3917,9 +3904,7 @@ internal class HERO : MonoBehaviour
                 LayerMask layerMask3 = LayerMask.op_Implicit(1 << LayerMask.NameToLayer("Ground"));
                 LayerMask layerMask4 = LayerMask.op_Implicit(LayerMask.op_Implicit(LayerMask.op_Implicit(1 << LayerMask.NameToLayer("EnemyBox"))) | LayerMask.op_Implicit(layerMask3));
                 RaycastHit hit;
-                ref RaycastHit local = ref hit;
-                int num = ((LayerMask) ref layerMask4).value;
-                if (Physics.Raycast(ray, ref local, 1E+07f, num))
+                if (Physics.Raycast(ray, ref hit, 1E+07f, ((LayerMask) ref layerMask4).value))
                 {
                   if (Object.op_Inequality((Object) this.bulletRight, (Object) null))
                   {
@@ -4044,9 +4029,7 @@ internal class HERO : MonoBehaviour
             LayerMask layerMask5 = LayerMask.op_Implicit(1 << LayerMask.NameToLayer("Ground"));
             LayerMask layerMask6 = LayerMask.op_Implicit(LayerMask.op_Implicit(LayerMask.op_Implicit(1 << LayerMask.NameToLayer("EnemyBox"))) | LayerMask.op_Implicit(layerMask5));
             RaycastHit raycastHit;
-            ref RaycastHit local = ref raycastHit;
-            int num = ((LayerMask) ref layerMask6).value;
-            if (Physics.Raycast(ray, ref local, 1E+07f, num))
+            if (Physics.Raycast(ray, ref raycastHit, 1E+07f, ((LayerMask) ref layerMask6).value))
               this.gunTarget = ((RaycastHit) ref raycastHit).point;
           }
           bool flag1 = false;
@@ -4335,11 +4318,12 @@ internal class HERO : MonoBehaviour
               Transform transform = this.setup.part_blade_l.transform;
               GameObject gameObject = (GameObject) Object.Instantiate(Resources.Load("Character_parts/character_gun_l"), transform.position, transform.rotation);
               gameObject.renderer.material = CharacterMaterials.materials[this.setup.myCostume._3dmg_texture];
-              gameObject.rigidbody.AddForce(Vector3.op_Subtraction(Vector3.op_Addition(Vector3.op_Multiply(Vector3.op_UnaryNegation(this.baseTransform.forward), 10f), Vector3.op_Multiply(this.baseTransform.up, 5f)), this.baseTransform.right), (ForceMode) 1);
-              Vector3 vector3;
+              Vector3 vector3_1 = Vector3.op_Subtraction(Vector3.op_Addition(Vector3.op_Multiply(Vector3.op_UnaryNegation(this.baseTransform.forward), 10f), Vector3.op_Multiply(this.baseTransform.up, 5f)), this.baseTransform.right);
+              gameObject.rigidbody.AddForce(vector3_1, (ForceMode) 1);
+              Vector3 vector3_2;
               // ISSUE: explicit constructor call
-              ((Vector3) ref vector3).\u002Ector((float) Random.Range(-100, 100), (float) Random.Range(-100, 100), (float) Random.Range(-100, 100));
-              gameObject.rigidbody.AddTorque(vector3, (ForceMode) 5);
+              ((Vector3) ref vector3_2).\u002Ector((float) Random.Range(-100, 100), (float) Random.Range(-100, 100), (float) Random.Range(-100, 100));
+              gameObject.rigidbody.AddTorque(vector3_2, (ForceMode) 5);
             }
             if (!this.rightGunHasBullet && this.setup.part_blade_r.activeSelf)
             {
@@ -4347,11 +4331,12 @@ internal class HERO : MonoBehaviour
               Transform transform = this.setup.part_blade_r.transform;
               GameObject gameObject = (GameObject) Object.Instantiate(Resources.Load("Character_parts/character_gun_r"), transform.position, transform.rotation);
               gameObject.renderer.material = CharacterMaterials.materials[this.setup.myCostume._3dmg_texture];
-              gameObject.rigidbody.AddForce(Vector3.op_Addition(Vector3.op_Addition(Vector3.op_Multiply(Vector3.op_UnaryNegation(this.baseTransform.forward), 10f), Vector3.op_Multiply(this.baseTransform.up, 5f)), this.baseTransform.right), (ForceMode) 1);
-              Vector3 vector3;
+              Vector3 vector3_3 = Vector3.op_Addition(Vector3.op_Addition(Vector3.op_Multiply(Vector3.op_UnaryNegation(this.baseTransform.forward), 10f), Vector3.op_Multiply(this.baseTransform.up, 5f)), this.baseTransform.right);
+              gameObject.rigidbody.AddForce(vector3_3, (ForceMode) 1);
+              Vector3 vector3_4;
               // ISSUE: explicit constructor call
-              ((Vector3) ref vector3).\u002Ector((float) Random.Range(-300, 300), (float) Random.Range(-300, 300), (float) Random.Range(-300, 300));
-              gameObject.rigidbody.AddTorque(vector3, (ForceMode) 5);
+              ((Vector3) ref vector3_4).\u002Ector((float) Random.Range(-300, 300), (float) Random.Range(-300, 300), (float) Random.Range(-300, 300));
+              gameObject.rigidbody.AddTorque(vector3_4, (ForceMode) 5);
             }
           }
           if ((double) this.baseAnimation[this.reloadAnimation].normalizedTime > 0.62000000476837158 && !this.throwedBlades)
@@ -4492,9 +4477,7 @@ internal class HERO : MonoBehaviour
             LayerMask layerMask7 = LayerMask.op_Implicit(1 << LayerMask.NameToLayer("Ground"));
             LayerMask layerMask8 = LayerMask.op_Implicit(LayerMask.op_Implicit(LayerMask.op_Implicit(1 << LayerMask.NameToLayer("EnemyBox"))) | LayerMask.op_Implicit(layerMask7));
             RaycastHit hit;
-            ref RaycastHit local = ref hit;
-            int num = ((LayerMask) ref layerMask8).value;
-            if (Physics.Raycast(ray, ref local, 10000f, num))
+            if (Physics.Raycast(ray, ref hit, 10000f, ((LayerMask) ref layerMask8).value))
             {
               this.launchLeftRope(hit, true);
               this.rope.Play();
@@ -4515,9 +4498,7 @@ internal class HERO : MonoBehaviour
             LayerMask layerMask9 = LayerMask.op_Implicit(1 << LayerMask.NameToLayer("Ground"));
             LayerMask layerMask10 = LayerMask.op_Implicit(LayerMask.op_Implicit(LayerMask.op_Implicit(1 << LayerMask.NameToLayer("EnemyBox"))) | LayerMask.op_Implicit(layerMask9));
             RaycastHit hit;
-            ref RaycastHit local = ref hit;
-            int num = ((LayerMask) ref layerMask10).value;
-            if (Physics.Raycast(ray, ref local, 10000f, num))
+            if (Physics.Raycast(ray, ref hit, 10000f, ((LayerMask) ref layerMask10).value))
             {
               this.launchRightRope(hit, true);
               this.rope.Play();
@@ -4536,9 +4517,7 @@ internal class HERO : MonoBehaviour
             LayerMask layerMask11 = LayerMask.op_Implicit(1 << LayerMask.NameToLayer("Ground"));
             LayerMask layerMask12 = LayerMask.op_Implicit(LayerMask.op_Implicit(LayerMask.op_Implicit(1 << LayerMask.NameToLayer("EnemyBox"))) | LayerMask.op_Implicit(layerMask11));
             RaycastHit hit;
-            ref RaycastHit local = ref hit;
-            int num = ((LayerMask) ref layerMask12).value;
-            if (Physics.Raycast(ray, ref local, 1000000f, num))
+            if (Physics.Raycast(ray, ref hit, 1000000f, ((LayerMask) ref layerMask12).value))
             {
               this.launchLeftRope(hit, false);
               this.launchRightRope(hit, false);
@@ -4609,9 +4588,7 @@ internal class HERO : MonoBehaviour
     LayerMask layerMask = LayerMask.op_Implicit(1 << LayerMask.NameToLayer("Ground") | 1 << LayerMask.NameToLayer("EnemyBox"));
     Vector3 vector3_1 = Vector3.op_Addition(this.baseTransform.position, Vector3.op_Multiply(Vector3.forward, 1000f));
     RaycastHit raycastHit;
-    ref RaycastHit local = ref raycastHit;
-    int num = ((LayerMask) ref layerMask).value;
-    if (Physics.Raycast(ray, ref local, 1000000f, num))
+    if (Physics.Raycast(ray, ref raycastHit, 1000000f, ((LayerMask) ref layerMask).value))
       vector3_1 = ((RaycastHit) ref raycastHit).point;
     Vector3 vector3_2 = Vector3.Normalize(Vector3.op_Subtraction(vector3_1, this.baseTransform.position));
     Vector3 position;
@@ -4710,7 +4687,7 @@ internal class HERO : MonoBehaviour
   public void useBlade(int amount = 0)
   {
     if (amount == 0)
-      amount = 1;
+      amount = -1;
     amount *= 2;
     if ((double) this.currentBladeSta <= 0.0)
       return;

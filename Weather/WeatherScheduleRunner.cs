@@ -138,8 +138,7 @@ namespace Weather
             BaseSetting setting2 = (BaseSetting) this._manager._currentWeather.Settings[(object) weatherEvent.Effect.ToString()];
             this._manager._targetWeatherStartTimes[(int) weatherEvent.Effect] = this._manager._currentTime;
             this._manager._targetWeatherEndTimes[(int) weatherEvent.Effect] = this._manager._currentTime + (float) weatherEvent.GetValue();
-            BaseSetting other = setting2;
-            setting1.Copy(other);
+            setting1.Copy(setting2);
             this._manager._needSync = true;
             break;
           case WeatherAction.Wait:

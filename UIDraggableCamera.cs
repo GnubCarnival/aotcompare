@@ -56,14 +56,13 @@ public class UIDraggableCamera : IgnoreTimeScale
     ((Vector3) ref local2).\u002Ector((float) num3, (float) num4, 0.0f);
     Vector3 worldPoint1 = this.mCam.ScreenToWorldPoint(vector3_1);
     Vector3 worldPoint2 = this.mCam.ScreenToWorldPoint(vector3_2);
-    Vector2 minRect = new Vector2(((Bounds) ref this.mBounds).min.x, ((Bounds) ref this.mBounds).min.y);
-    Vector2 vector2;
+    Vector2 minRect;
     // ISSUE: explicit constructor call
-    ((Vector2) ref vector2).\u002Ector(((Bounds) ref this.mBounds).max.x, ((Bounds) ref this.mBounds).max.y);
-    Vector2 maxRect = vector2;
-    Vector2 minArea = Vector2.op_Implicit(worldPoint1);
-    Vector2 maxArea = Vector2.op_Implicit(worldPoint2);
-    return Vector2.op_Implicit(NGUIMath.ConstrainRect(minRect, maxRect, minArea, maxArea));
+    ((Vector2) ref minRect).\u002Ector(((Bounds) ref this.mBounds).min.x, ((Bounds) ref this.mBounds).min.y);
+    Vector2 maxRect;
+    // ISSUE: explicit constructor call
+    ((Vector2) ref maxRect).\u002Ector(((Bounds) ref this.mBounds).max.x, ((Bounds) ref this.mBounds).max.y);
+    return Vector2.op_Implicit(NGUIMath.ConstrainRect(minRect, maxRect, Vector2.op_Implicit(worldPoint1), Vector2.op_Implicit(worldPoint2)));
   }
 
   public bool ConstrainToBounds(bool immediate)

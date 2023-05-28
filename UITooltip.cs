@@ -57,8 +57,7 @@ public class UITooltip : MonoBehaviour
         this.mSize.x += (float) ((double) this.background.border.x + (double) this.background.border.z + ((double) localPosition.x - (double) this.background.border.x) * 2.0);
         this.mSize.y += (float) ((double) this.background.border.y + (double) this.background.border.w + (-(double) localPosition.y - (double) this.background.border.y) * 2.0);
         this.mSize.z = 1f;
-        Vector3 mSize = this.mSize;
-        transform1.localScale = mSize;
+        transform1.localScale = this.mSize;
       }
       if (Object.op_Inequality((Object) this.uiCamera, (Object) null))
       {

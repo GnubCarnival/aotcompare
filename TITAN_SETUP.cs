@@ -65,9 +65,10 @@ public class TITAN_SETUP : MonoBehaviour
   {
     if (id < 0)
       return;
-    float num1 = 0.125f * (float) (int) ((double) id / 8.0);
-    float num2 = (float) -0.25 * (float) (id % 4);
-    go.renderer.material.mainTextureOffset = new Vector2(num1, num2);
+    float num1 = 0.25f;
+    float num2 = 0.125f * (float) (int) ((double) id / 8.0);
+    float num3 = -num1 * (float) (id % 4);
+    go.renderer.material.mainTextureOffset = new Vector2(num2, num3);
   }
 
   public void setHair2()

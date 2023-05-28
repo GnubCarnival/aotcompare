@@ -109,12 +109,13 @@ public class Minimap : MonoBehaviour
     RenderTexture active = RenderTexture.active;
     RenderTexture.active = cam.targetTexture;
     cam.Render();
-    Texture2D texture2D = new Texture2D(((Texture) cam.targetTexture).width, ((Texture) cam.targetTexture).height, (TextureFormat) 3, false);
-    ((Texture) texture2D).filterMode = (FilterMode) 1;
-    texture2D.ReadPixels(new Rect(0.0f, 0.0f, (float) ((Texture) cam.targetTexture).width, (float) ((Texture) cam.targetTexture).height), 0, 0);
-    texture2D.Apply();
+    Texture2D texture2D1 = new Texture2D(((Texture) cam.targetTexture).width, ((Texture) cam.targetTexture).height, (TextureFormat) 3, false);
+    ((Texture) texture2D1).filterMode = (FilterMode) 1;
+    Texture2D texture2D2 = texture2D1;
+    texture2D2.ReadPixels(new Rect(0.0f, 0.0f, (float) ((Texture) cam.targetTexture).width, (float) ((Texture) cam.targetTexture).height), 0, 0);
+    texture2D2.Apply();
     RenderTexture.active = active;
-    return texture2D;
+    return texture2D2;
   }
 
   private void CaptureMinimapRT(Camera cam)
@@ -265,9 +266,10 @@ public class Minimap : MonoBehaviour
   {
     if (Object.op_Equality((Object) this.minimapRT, (Object) null))
     {
-      int num = SystemInfo.SupportsRenderTextureFormat((RenderTextureFormat) 4) ? 1 : 0;
+      bool flag = SystemInfo.SupportsRenderTextureFormat((RenderTextureFormat) 4);
+      RenderTextureFormat renderTextureFormat = flag ? (RenderTextureFormat) 4 : (RenderTextureFormat) 7;
       this.minimapRT = new RenderTexture(pixelSize, pixelSize, 16, (RenderTextureFormat) 4);
-      if (num == 0)
+      if (!flag)
         Debug.Log((object) (SystemInfo.graphicsDeviceName + " (" + SystemInfo.graphicsDeviceVendor + ") does not support RGB565 format, the minimap will have transparency issues on certain maps"));
     }
     cam.targetTexture = this.minimapRT;
@@ -742,10 +744,7 @@ public class Minimap : MonoBehaviour
       Sprite spriteForStyle = Minimap.GetSpriteForStyle(style);
       GameObject uiElement = new GameObject(nameof (MinimapIcon));
       RectTransform rectTransform = uiElement.AddComponent<RectTransform>();
-      Vector2 vector2_1;
-      Vector2 vector2_2 = vector2_1 = Vector2.op_Implicit(new Vector3(0.5f, 0.5f));
-      rectTransform.anchorMax = vector2_1;
-      rectTransform.anchorMin = vector2_2;
+      rectTransform.anchorMin = rectTransform.anchorMax = Vector2.op_Implicit(new Vector3(0.5f, 0.5f));
       rectTransform.sizeDelta = new Vector2((float) ((Texture) spriteForStyle.texture).width, (float) ((Texture) spriteForStyle.texture).height);
       Image image = uiElement.AddComponent<Image>();
       image.sprite = spriteForStyle;
@@ -771,10 +770,7 @@ public class Minimap : MonoBehaviour
       uiElement.transform.SetParent((Transform) parent, false);
       GameObject uiPointer = new GameObject("IconPointer");
       RectTransform rectTransform2 = uiPointer.AddComponent<RectTransform>();
-      Vector2 anchorMin;
-      Vector2 vector2 = anchorMin = rectTransform1.anchorMin;
-      rectTransform2.anchorMax = anchorMin;
-      rectTransform2.anchorMin = vector2;
+      rectTransform2.anchorMin = rectTransform2.anchorMax = rectTransform1.anchorMin;
       rectTransform2.sizeDelta = new Vector2((float) ((Texture) Minimap.pointerSprite.texture).width, (float) ((Texture) Minimap.pointerSprite.texture).height);
       Image image2 = uiPointer.AddComponent<Image>();
       image2.sprite = Minimap.pointerSprite;

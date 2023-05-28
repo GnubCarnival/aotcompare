@@ -20,10 +20,9 @@ namespace UI
     {
       GameObject defaultMenu = AssetBundleManager.InstantiateAsset<GameObject>("DefaultMenu");
       defaultMenu.transform.position = Vector3.zero;
-      // ISSUE: variable of a boxed type
-      __Boxed<T> local = (object) defaultMenu.AddComponent<T>();
-      local.Setup();
-      local.ApplyScale();
+      BaseMenu baseMenu = (BaseMenu) defaultMenu.AddComponent<T>();
+      baseMenu.Setup();
+      baseMenu.ApplyScale();
       return defaultMenu;
     }
 
@@ -98,17 +97,7 @@ namespace UI
       DropdownSettingElement dropdownSettingElement = dropdownSetting.AddComponent<DropdownSettingElement>();
       if (!optionsWidth.HasValue)
         optionsWidth = new float?(elementWidth);
-      BaseSetting setting1 = setting;
-      ElementStyle style1 = style;
-      string title1 = title;
-      string[] options1 = options;
-      string tooltip1 = tooltip;
-      double elementWidth1 = (double) elementWidth;
-      double elementHeight1 = (double) elementHeight;
-      double optionsWidth1 = (double) optionsWidth.Value;
-      double maxScrollHeight1 = (double) maxScrollHeight;
-      UnityAction onDropdownOptionSelect1 = onDropdownOptionSelect;
-      dropdownSettingElement.Setup(setting1, style1, title1, options1, tooltip1, (float) elementWidth1, (float) elementHeight1, (float) optionsWidth1, (float) maxScrollHeight1, onDropdownOptionSelect1);
+      dropdownSettingElement.Setup(setting, style, title, options, tooltip, elementWidth, elementHeight, optionsWidth.Value, maxScrollHeight, onDropdownOptionSelect);
       return dropdownSetting;
     }
 
@@ -221,11 +210,9 @@ namespace UI
       ((Graphic) component).color = UIManager.GetThemeColor(style.ThemePanel, "DefaultLabel", "TextColor");
       component.alignment = alignment;
       if (Object.op_Inequality((Object) ((Component) parent).GetComponent<VerticalLayoutGroup>(), (Object) null))
-      {
         ((Component) component).GetComponent<ContentSizeFitter>().horizontalFit = (ContentSizeFitter.FitMode) 0;
-        return defaultLabel;
-      }
-      ((Component) component).GetComponent<ContentSizeFitter>().horizontalFit = (ContentSizeFitter.FitMode) 2;
+      else
+        ((Component) component).GetComponent<ContentSizeFitter>().horizontalFit = (ContentSizeFitter.FitMode) 2;
       return defaultLabel;
     }
 
@@ -311,10 +298,7 @@ namespace UI
       Vector2 offset)
     {
       RectTransform component = obj.GetComponent<RectTransform>();
-      Vector2 anchorVector;
-      Vector2 vector2 = anchorVector = ElementFactory.GetAnchorVector(anchor);
-      component.anchorMax = anchorVector;
-      component.anchorMin = vector2;
+      component.anchorMin = component.anchorMax = ElementFactory.GetAnchorVector(anchor);
       component.pivot = ElementFactory.GetAnchorVector(pivot);
       component.anchoredPosition = offset;
     }

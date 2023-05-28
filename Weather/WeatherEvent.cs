@@ -36,19 +36,10 @@ namespace Weather
             case WeatherValueType.Color:
               Color color1 = (Color) this.Values[0];
               Color color2 = (Color) this.Values[1];
-              if (color1.IsGray() && color2.IsGray())
-              {
-                double num = (double) Random.Range(color1.r, color2.r);
-                return (object) new Color((float) num, (float) num, (float) num);
-              }
-              double num1 = (double) Random.Range(Mathf.Min(color1.r, color2.r), Mathf.Max(color1.r, color2.r));
-              float num2 = Random.Range(Mathf.Min(color1.g, color2.g), Mathf.Max(color1.g, color2.g));
-              float num3 = Random.Range(Mathf.Min(color1.b, color2.b), Mathf.Max(color1.b, color2.b));
-              float num4 = Random.Range(Mathf.Min(color1.a, color2.a), Mathf.Max(color1.a, color2.a));
-              double num5 = (double) num2;
-              double num6 = (double) num3;
-              double num7 = (double) num4;
-              return (object) new Color((float) num1, (float) num5, (float) num6, (float) num7);
+              if (!color1.IsGray() || !color2.IsGray())
+                return (object) new Color(Random.Range(Mathf.Min(color1.r, color2.r), Mathf.Max(color1.r, color2.r)), Random.Range(Mathf.Min(color1.g, color2.g), Mathf.Max(color1.g, color2.g)), Random.Range(Mathf.Min(color1.b, color2.b), Mathf.Max(color1.b, color2.b)), Random.Range(Mathf.Min(color1.a, color2.a), Mathf.Max(color1.a, color2.a)));
+              float num = Random.Range(color1.r, color2.r);
+              return (object) new Color(num, num, num);
           }
           break;
         case WeatherValueSelectType.RandomFromList:

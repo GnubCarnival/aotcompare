@@ -97,9 +97,6 @@ namespace UI
       SetNamePopup setNamePopup = parent.SetNamePopup;
       WeatherSettings weatherSettings = SettingsManager.WeatherSettings;
       // ISSUE: reference to a compiler-generated field
-      if (cDisplayClass50.name == null)
-        return;
-      // ISSUE: reference to a compiler-generated field
       string name1 = cDisplayClass50.name;
       // ISSUE: reference to a compiler-generated method
       switch (\u003CPrivateImplementationDetails\u003E.ComputeStringHash(name1))

@@ -24,7 +24,7 @@ namespace Weather
       {
         Vector3 start = Vector3.op_Addition(Vector3.op_Multiply(Vector3.up, 1500f), Vector3.op_Multiply(Vector3.right, Random.Range(-1000f, 1000f)));
         Vector3 end = Vector3.op_Addition(Vector3.op_Multiply(Vector3.down, 300f), Vector3.op_Multiply(Vector3.right, Random.Range(-1000f, 1000f)));
-        double num = (double) Vector3.Distance(start, end);
+        Vector3.Distance(start, end);
         int generation = 9;
         if (SettingsManager.GraphicsSettings.WeatherEffects.Value == 2)
           generation = 8;

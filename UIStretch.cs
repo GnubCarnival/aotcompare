@@ -96,7 +96,7 @@ public class UIStretch : MonoBehaviour
     }
     else if (this.style == UIStretch.Style.FillKeepingRatio)
     {
-      if ((double) this.initialSize.x / (double) this.initialSize.y < (double) (width / height))
+      if ((double) (this.initialSize.x / this.initialSize.y) < (double) (width / height))
       {
         float num3 = width / this.initialSize.x;
         localScale1.x = width;
@@ -111,7 +111,7 @@ public class UIStretch : MonoBehaviour
     }
     else if (this.style == UIStretch.Style.FitInternalKeepingRatio)
     {
-      if ((double) this.initialSize.x / (double) this.initialSize.y > (double) (width / height))
+      if ((double) (this.initialSize.x / this.initialSize.y) > (double) (width / height))
       {
         float num5 = width / this.initialSize.x;
         localScale1.x = width;

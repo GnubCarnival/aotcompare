@@ -74,26 +74,25 @@ public class UIPanel : MonoBehaviour
   {
     float num1 = this.clipRange.z * 0.5f;
     float num2 = this.clipRange.w * 0.5f;
-    Vector2 minRect = new Vector2(min.x, min.y);
-    Vector2 vector2_1;
+    Vector2 minRect;
     // ISSUE: explicit constructor call
-    ((Vector2) ref vector2_1).\u002Ector(max.x, max.y);
-    Vector2 vector2_2;
+    ((Vector2) ref minRect).\u002Ector(min.x, min.y);
+    Vector2 maxRect;
     // ISSUE: explicit constructor call
-    ((Vector2) ref vector2_2).\u002Ector(this.clipRange.x - num1, this.clipRange.y - num2);
-    Vector2 vector2_3;
+    ((Vector2) ref maxRect).\u002Ector(max.x, max.y);
+    Vector2 minArea;
     // ISSUE: explicit constructor call
-    ((Vector2) ref vector2_3).\u002Ector(this.clipRange.x + num1, this.clipRange.y + num2);
+    ((Vector2) ref minArea).\u002Ector(this.clipRange.x - num1, this.clipRange.y - num2);
+    Vector2 maxArea;
+    // ISSUE: explicit constructor call
+    ((Vector2) ref maxArea).\u002Ector(this.clipRange.x + num1, this.clipRange.y + num2);
     if (this.clipping == UIDrawCall.Clipping.SoftClip)
     {
-      vector2_2.x += this.clipSoftness.x;
-      vector2_2.y += this.clipSoftness.y;
-      vector2_3.x -= this.clipSoftness.x;
-      vector2_3.y -= this.clipSoftness.y;
+      minArea.x += this.clipSoftness.x;
+      minArea.y += this.clipSoftness.y;
+      maxArea.x -= this.clipSoftness.x;
+      maxArea.y -= this.clipSoftness.y;
     }
-    Vector2 maxRect = vector2_1;
-    Vector2 minArea = vector2_2;
-    Vector2 maxArea = vector2_3;
     return Vector2.op_Implicit(NGUIMath.ConstrainRect(minRect, maxRect, minArea, maxArea));
   }
 
@@ -262,15 +261,14 @@ public class UIPanel : MonoBehaviour
     UIPanel.mTemp[2] = c.x;
     UIPanel.mTemp[3] = d.x;
     float num1 = Mathf.Min(UIPanel.mTemp);
-    double num2 = (double) Mathf.Max(UIPanel.mTemp);
+    float num2 = Mathf.Max(UIPanel.mTemp);
     UIPanel.mTemp[0] = a.y;
     UIPanel.mTemp[1] = b.y;
     UIPanel.mTemp[2] = c.y;
     UIPanel.mTemp[3] = d.y;
     float num3 = Mathf.Min(UIPanel.mTemp);
     float num4 = Mathf.Max(UIPanel.mTemp);
-    double x = (double) this.mMin.x;
-    return num2 >= x && (double) num4 >= (double) this.mMin.y && (double) num1 <= (double) this.mMax.x && (double) num3 <= (double) this.mMax.y;
+    return (double) num2 >= (double) this.mMin.x && (double) num4 >= (double) this.mMin.y && (double) num1 <= (double) this.mMax.x && (double) num3 <= (double) this.mMax.y;
   }
 
   private void LateUpdate()

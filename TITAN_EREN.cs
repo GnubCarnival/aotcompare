@@ -6,6 +6,7 @@
 using CustomSkins;
 using Photon;
 using Settings;
+using System;
 using System.Collections;
 using UI;
 using UnityEngine;
@@ -197,14 +198,13 @@ public class TITAN_EREN : MonoBehaviour
             ((Vector3) ref vector3_2).\u002Ector(num3, 0.0f, num4);
             Quaternion rotation = ((Component) this.currentCamera).transform.rotation;
             float num5 = ((Quaternion) ref rotation).eulerAngles.y + (float) (-(double) (Mathf.Atan2(num4, num3) * 57.29578f) + 90.0);
-            double num6 = -(double) num5 + 90.0;
-            float num7 = Mathf.Cos((float) (num6 * 0.017453290522098541));
-            float num8 = Mathf.Sin((float) (num6 * 0.017453290522098541));
+            float num6 = (float) (-(double) num5 + 90.0);
+            float num7 = Mathf.Cos(num6 * ((float) Math.PI / 180f));
+            float num8 = Mathf.Sin(num6 * ((float) Math.PI / 180f));
             // ISSUE: explicit constructor call
             ((Vector3) ref vector3_1).\u002Ector(num7, 0.0f, num8);
             float num9 = (double) ((Vector3) ref vector3_2).magnitude <= 0.949999988079071 ? ((double) ((Vector3) ref vector3_2).magnitude >= 0.25 ? ((Vector3) ref vector3_2).magnitude : 0.0f) : 1f;
-            vector3_1 = Vector3.op_Multiply(vector3_1, num9);
-            vector3_1 = Vector3.op_Multiply(vector3_1, this.speed);
+            vector3_1 = Vector3.op_Multiply(Vector3.op_Multiply(vector3_1, num9), this.speed);
             if ((double) num3 != 0.0 || (double) num4 != 0.0)
             {
               if (!((Component) this).animation.IsPlaying("run") && !((Component) this).animation.IsPlaying("jump_start") && !((Component) this).animation.IsPlaying("jump_air"))
@@ -251,17 +251,16 @@ public class TITAN_EREN : MonoBehaviour
             ((Vector3) ref vector3_4).\u002Ector(num3, 0.0f, num4);
             Quaternion rotation = ((Component) this.currentCamera).transform.rotation;
             float num10 = ((Quaternion) ref rotation).eulerAngles.y + (float) (-(double) (Mathf.Atan2(num4, num3) * 57.29578f) + 90.0);
-            double num11 = -(double) num10 + 90.0;
-            float num12 = Mathf.Cos((float) (num11 * 0.017453290522098541));
-            float num13 = Mathf.Sin((float) (num11 * 0.017453290522098541));
+            float num11 = (float) (-(double) num10 + 90.0);
+            float num12 = Mathf.Cos(num11 * ((float) Math.PI / 180f));
+            float num13 = Mathf.Sin(num11 * ((float) Math.PI / 180f));
             Vector3 vector3_5;
             // ISSUE: explicit constructor call
             ((Vector3) ref vector3_5).\u002Ector(num12, 0.0f, num13);
             float num14 = (double) ((Vector3) ref vector3_4).magnitude <= 0.949999988079071 ? ((double) ((Vector3) ref vector3_4).magnitude >= 0.25 ? ((Vector3) ref vector3_4).magnitude : 0.0f) : 1f;
-            vector3_5 = Vector3.op_Multiply(vector3_5, num14);
-            vector3_5 = Vector3.op_Multiply(vector3_5, this.speed * 2f);
+            Vector3 vector3_6 = Vector3.op_Multiply(Vector3.op_Multiply(vector3_5, num14), this.speed * 2f);
             if ((double) num3 != 0.0 || (double) num4 != 0.0)
-              ((Component) this).rigidbody.AddForce(vector3_5, (ForceMode) 1);
+              ((Component) this).rigidbody.AddForce(vector3_6, (ForceMode) 1);
             else
               num10 = -874f;
             if ((double) num10 != -874.0)

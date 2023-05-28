@@ -79,8 +79,6 @@ namespace UI
     {
       this.HideAllPopups();
       MultiplayerSettings multiplayerSettings = SettingsManager.MultiplayerSettings;
-      if (name == null)
-        return;
       // ISSUE: reference to a compiler-generated method
       switch (\u003CPrivateImplementationDetails\u003E.ComputeStringHash(name))
       {

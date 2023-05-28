@@ -371,9 +371,9 @@ public class UICamera : MonoBehaviour
 
   public void ProcessTouch(bool pressed, bool unpressed)
   {
-    bool flag = UICamera.currentTouch == UICamera.mMouse[0] || UICamera.currentTouch == UICamera.mMouse[1] || UICamera.currentTouch == UICamera.mMouse[2];
-    float num1 = !flag ? this.touchDragThreshold : this.mouseDragThreshold;
-    float num2 = !flag ? this.touchClickThreshold : this.mouseClickThreshold;
+    bool flag1 = UICamera.currentTouch == UICamera.mMouse[0] || UICamera.currentTouch == UICamera.mMouse[1] || UICamera.currentTouch == UICamera.mMouse[2];
+    float num1 = !flag1 ? this.touchDragThreshold : this.mouseDragThreshold;
+    float num2 = !flag1 ? this.touchClickThreshold : this.mouseClickThreshold;
     if (pressed)
     {
       if (Object.op_Inequality((Object) this.mTooltip, (Object) null))
@@ -382,7 +382,7 @@ public class UICamera : MonoBehaviour
       UICamera.Notify(UICamera.currentTouch.pressed, "OnPress", (object) false);
       UICamera.currentTouch.pressed = UICamera.currentTouch.current;
       UICamera.currentTouch.dragged = UICamera.currentTouch.current;
-      UICamera.currentTouch.clickNotification = !flag ? UICamera.ClickNotification.Always : UICamera.ClickNotification.BasedOnDelta;
+      UICamera.currentTouch.clickNotification = !flag1 ? UICamera.ClickNotification.Always : UICamera.ClickNotification.BasedOnDelta;
       UICamera.currentTouch.totalDelta = Vector2.zero;
       UICamera.currentTouch.dragStarted = false;
       UICamera.Notify(UICamera.currentTouch.pressed, "OnPress", (object) true);
@@ -418,10 +418,10 @@ public class UICamera : MonoBehaviour
           if (Object.op_Inequality((Object) this.mTooltip, (Object) null))
             this.ShowTooltip(false);
           UICamera.isDragging = true;
-          int num3 = UICamera.currentTouch.clickNotification == UICamera.ClickNotification.None ? 1 : 0;
+          bool flag2 = UICamera.currentTouch.clickNotification == UICamera.ClickNotification.None;
           UICamera.Notify(UICamera.currentTouch.dragged, "OnDrag", (object) UICamera.currentTouch.delta);
           UICamera.isDragging = false;
-          if (num3 != 0)
+          if (flag2)
             UICamera.currentTouch.clickNotification = UICamera.ClickNotification.None;
           else if (UICamera.currentTouch.clickNotification == UICamera.ClickNotification.BasedOnDelta && (double) num2 < (double) magnitude)
             UICamera.currentTouch.clickNotification = UICamera.ClickNotification.None;

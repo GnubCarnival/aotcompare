@@ -56,13 +56,10 @@ internal class LegacyPopupTemplate
     float num2 = (float) (((double) this.Width - (double) buttonWidth) * 0.5);
     float num3 = (float) (((double) this.Height - (double) messageHeight - (double) buttonHeight) / 3.0);
     GUI.Label(new Rect(this.PositionX + num1, this.PositionY + num3, messageWidth, messageHeight), message);
-    double num4 = (double) this.PositionX + (double) num2;
+    float num4 = this.PositionX + num2;
     float num5 = this.PositionY + this.Height - buttonHeight - num3;
     GUI.backgroundColor = this.ButtonColor;
-    double num6 = (double) num5;
-    double num7 = (double) buttonWidth;
-    double num8 = (double) buttonHeight;
-    return GUI.Button(new Rect((float) num4, (float) num6, (float) num7, (float) num8), buttonMessage);
+    return GUI.Button(new Rect(num4, num5, buttonWidth, buttonHeight), buttonMessage);
   }
 
   public bool[] DrawPopupWithTwoButtons(

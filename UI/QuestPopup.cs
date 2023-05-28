@@ -112,12 +112,9 @@ namespace UI
 
     private void OnBottomBarButtonClick(string name)
     {
-      switch (name)
-      {
-        case "Back":
-          this.Hide();
-          break;
-      }
+      if (!(name == "Back"))
+        return;
+      this.Hide();
     }
   }
 }

@@ -46,27 +46,22 @@ namespace Xft
 
     public void EnlargeArrays(int count, int icount)
     {
-      Vector3[] vertices1 = this.Vertices;
+      Vector3[] vertices = this.Vertices;
       this.Vertices = new Vector3[this.Vertices.Length + count];
-      Vector3[] vertices2 = this.Vertices;
-      vertices1.CopyTo((Array) vertices2, 0);
-      Vector2[] uvs1 = this.UVs;
+      vertices.CopyTo((Array) this.Vertices, 0);
+      Vector2[] uvs = this.UVs;
       this.UVs = new Vector2[this.UVs.Length + count];
-      Vector2[] uvs2 = this.UVs;
-      uvs1.CopyTo((Array) uvs2, 0);
-      Vector2[] uvs2_1 = this.UVs2;
+      uvs.CopyTo((Array) this.UVs, 0);
+      Vector2[] uvs2 = this.UVs2;
       this.UVs2 = new Vector2[this.UVs2.Length + count];
-      Vector2[] uvs2_2 = this.UVs2;
-      uvs2_1.CopyTo((Array) uvs2_2, 0);
+      uvs2.CopyTo((Array) this.UVs2, 0);
       this.InitDefaultShaderParam(this.UVs2);
-      Color[] colors1 = this.Colors;
+      Color[] colors = this.Colors;
       this.Colors = new Color[this.Colors.Length + count];
-      Color[] colors2 = this.Colors;
-      colors1.CopyTo((Array) colors2, 0);
-      int[] indices1 = this.Indices;
+      colors.CopyTo((Array) this.Colors, 0);
+      int[] indices = this.Indices;
       this.Indices = new int[this.Indices.Length + icount];
-      int[] indices2 = this.Indices;
-      indices1.CopyTo((Array) indices2, 0);
+      indices.CopyTo((Array) this.Indices, 0);
       this.VertCountChanged = true;
       this.IndiceChanged = true;
       this.ColorChanged = true;

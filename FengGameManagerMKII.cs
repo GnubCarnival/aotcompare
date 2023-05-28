@@ -1811,9 +1811,8 @@ internal class FengGameManagerMKII : MonoBehaviour
     for (int index = 0; index < PhotonNetwork.playerList.Length; ++index)
     {
       PhotonPlayer player = PhotonNetwork.playerList[index];
-      Hashtable hashtable = new Hashtable();
-      ((Dictionary<object, object>) hashtable).Add((object) PhotonPlayerProperty.isTitan, (object) 1);
-      Hashtable propertiesToSet = hashtable;
+      Hashtable propertiesToSet = new Hashtable();
+      ((Dictionary<object, object>) propertiesToSet).Add((object) PhotonPlayerProperty.isTitan, (object) 1);
       player.SetCustomProperties(propertiesToSet);
     }
     int length = PhotonNetwork.playerList.Length;
@@ -1842,12 +1841,11 @@ internal class FengGameManagerMKII : MonoBehaviour
       for (int index = 0; index < PhotonNetwork.playerList.Length; ++index)
       {
         PhotonPlayer player = PhotonNetwork.playerList[index];
-        Hashtable hashtable = new Hashtable();
-        ((Dictionary<object, object>) hashtable).Add((object) PhotonPlayerProperty.kills, (object) 0);
-        ((Dictionary<object, object>) hashtable).Add((object) PhotonPlayerProperty.deaths, (object) 0);
-        ((Dictionary<object, object>) hashtable).Add((object) PhotonPlayerProperty.max_dmg, (object) 0);
-        ((Dictionary<object, object>) hashtable).Add((object) PhotonPlayerProperty.total_dmg, (object) 0);
-        Hashtable propertiesToSet = hashtable;
+        Hashtable propertiesToSet = new Hashtable();
+        ((Dictionary<object, object>) propertiesToSet).Add((object) PhotonPlayerProperty.kills, (object) 0);
+        ((Dictionary<object, object>) propertiesToSet).Add((object) PhotonPlayerProperty.deaths, (object) 0);
+        ((Dictionary<object, object>) propertiesToSet).Add((object) PhotonPlayerProperty.max_dmg, (object) 0);
+        ((Dictionary<object, object>) propertiesToSet).Add((object) PhotonPlayerProperty.total_dmg, (object) 0);
         player.SetCustomProperties(propertiesToSet);
       }
     }
@@ -3671,8 +3669,10 @@ internal class FengGameManagerMKII : MonoBehaviour
               ++num15;
               str1 = str1 + str2 + ";\n";
             }
-            TextEditor textEditor = new TextEditor();
-            textEditor.content = new GUIContent(str1);
+            TextEditor textEditor = new TextEditor()
+            {
+              content = new GUIContent(str1)
+            };
             textEditor.SelectAll();
             textEditor.Copy();
           }
@@ -3693,8 +3693,10 @@ internal class FengGameManagerMKII : MonoBehaviour
             GUI.Box(new Rect(num17, num18, 221f, 500f), string.Empty);
             if (GUI.Button(new Rect(num17 + 10f, num18 + 460f, 60f, 30f), "Copy"))
             {
-              TextEditor textEditor = new TextEditor();
-              textEditor.content = new GUIContent(str3);
+              TextEditor textEditor = new TextEditor()
+              {
+                content = new GUIContent(str3)
+              };
               textEditor.SelectAll();
               textEditor.Copy();
             }
@@ -3890,7 +3892,6 @@ internal class FengGameManagerMKII : MonoBehaviour
           FengGameManagerMKII.settingsOld[64] = (object) 107;
         else if (GUI.Button(new Rect(num1 + 200f, 45f, 70f, 25f), "Credits", GUIStyle.op_Implicit("box")))
           FengGameManagerMKII.settingsOld[64] = (object) 106;
-        int index8;
         float result1;
         if ((int) FengGameManagerMKII.settingsOld[64] == 101)
         {
@@ -3971,12 +3972,7 @@ internal class FengGameManagerMKII : MonoBehaviour
           else if (GUI.Button(new Rect(num1 + 30f, 268f, 64f, 30f), "Region"))
           {
             if ((string) FengGameManagerMKII.settingsOld[191] == string.Empty)
-            {
-              object[] settingsOld = FengGameManagerMKII.settingsOld;
-              index8 = Random.Range(10000, 99999);
-              string str = "Region" + index8.ToString();
-              settingsOld[191] = (object) str;
-            }
+              FengGameManagerMKII.settingsOld[191] = (object) ("Region" + Random.Range(10000, 99999).ToString());
             flag1 = true;
             flag2 = true;
             this.selectedObj = (GameObject) Object.Instantiate(FengGameManagerMKII.RCassets.Load("regionEditor"));
@@ -4104,16 +4100,16 @@ internal class FengGameManagerMKII : MonoBehaviour
             "torus",
             "tube"
           };
-          for (int index9 = 0; index9 < strArray.Length; ++index9)
+          for (int index = 0; index < strArray.Length; ++index)
           {
-            int num33 = index9 % 4;
-            int num34 = index9 / 4;
-            GUI.DrawTexture(new Rect((float) ((double) num1 + 7.8000001907348633 + 71.800003051757813 * (double) num33), (float) (90.0 + 114.0 * (double) num34), 64f, 64f), (Texture) this.RCLoadTexture("p" + strArray[index9]));
-            if (GUI.Button(new Rect((float) ((double) num1 + 7.8000001907348633 + 71.800003051757813 * (double) num33), (float) (159.0 + 114.0 * (double) num34), 64f, 30f), strArray[index9]))
+            int num33 = index % 4;
+            int num34 = index / 4;
+            GUI.DrawTexture(new Rect((float) ((double) num1 + 7.8000001907348633 + 71.800003051757813 * (double) num33), (float) (90.0 + 114.0 * (double) num34), 64f, 64f), (Texture) this.RCLoadTexture("p" + strArray[index]));
+            if (GUI.Button(new Rect((float) ((double) num1 + 7.8000001907348633 + 71.800003051757813 * (double) num33), (float) (159.0 + 114.0 * (double) num34), 64f, 30f), strArray[index]))
             {
               flag1 = true;
-              this.selectedObj = (GameObject) Object.Instantiate(FengGameManagerMKII.RCassets.Load(strArray[index9]));
-              ((Object) this.selectedObj).name = "custom," + strArray[index9];
+              this.selectedObj = (GameObject) Object.Instantiate(FengGameManagerMKII.RCassets.Load(strArray[index]));
+              ((Object) this.selectedObj).name = "custom," + strArray[index];
             }
           }
         }
@@ -4173,19 +4169,19 @@ internal class FengGameManagerMKII : MonoBehaviour
           };
           float num35 = (float) (110.0 + 114.0 * (double) ((strArray.Length - 1) / 4));
           this.scroll = GUI.BeginScrollView(new Rect(num1, 90f, 303f, 350f), this.scroll, new Rect(num1, 90f, 300f, num35), true, true);
-          for (int index10 = 0; index10 < strArray.Length; ++index10)
+          for (int index = 0; index < strArray.Length; ++index)
           {
-            int num36 = index10 % 4;
-            int num37 = index10 / 4;
-            GUI.DrawTexture(new Rect((float) ((double) num1 + 7.8000001907348633 + 71.800003051757813 * (double) num36), (float) (90.0 + 114.0 * (double) num37), 64f, 64f), (Texture) this.RCLoadTexture("p" + strArray[index10]));
-            if (GUI.Button(new Rect((float) ((double) num1 + 7.8000001907348633 + 71.800003051757813 * (double) num36), (float) (159.0 + 114.0 * (double) num37), 64f, 30f), strArray[index10]))
+            int num36 = index % 4;
+            int num37 = index / 4;
+            GUI.DrawTexture(new Rect((float) ((double) num1 + 7.8000001907348633 + 71.800003051757813 * (double) num36), (float) (90.0 + 114.0 * (double) num37), 64f, 64f), (Texture) this.RCLoadTexture("p" + strArray[index]));
+            if (GUI.Button(new Rect((float) ((double) num1 + 7.8000001907348633 + 71.800003051757813 * (double) num36), (float) (159.0 + 114.0 * (double) num37), 64f, 30f), strArray[index]))
             {
               flag1 = true;
-              this.selectedObj = (GameObject) Object.Instantiate(FengGameManagerMKII.RCassets.Load(strArray[index10]));
-              if (stringList.Contains(strArray[index10]))
-                ((Object) this.selectedObj).name = "customb," + strArray[index10];
+              this.selectedObj = (GameObject) Object.Instantiate(FengGameManagerMKII.RCassets.Load(strArray[index]));
+              if (stringList.Contains(strArray[index]))
+                ((Object) this.selectedObj).name = "customb," + strArray[index];
               else
-                ((Object) this.selectedObj).name = "custom," + strArray[index10];
+                ((Object) this.selectedObj).name = "custom," + strArray[index];
             }
           }
           GUI.EndScrollView();
@@ -4224,19 +4220,19 @@ internal class FengGameManagerMKII : MonoBehaviour
           };
           float num38 = (float) (110.0 + 114.0 * (double) ((strArray.Length - 1) / 4));
           this.scroll = GUI.BeginScrollView(new Rect(num1, 90f, 303f, 350f), this.scroll, new Rect(num1, 90f, 300f, num38), true, true);
-          for (int index11 = 0; index11 < strArray.Length; ++index11)
+          for (int index = 0; index < strArray.Length; ++index)
           {
-            int num39 = index11 % 4;
-            int num40 = index11 / 4;
-            GUI.DrawTexture(new Rect((float) ((double) num1 + 7.8000001907348633 + 71.800003051757813 * (double) num39), (float) (90.0 + 114.0 * (double) num40), 64f, 64f), (Texture) this.RCLoadTexture("p" + strArray[index11]));
-            if (GUI.Button(new Rect((float) ((double) num1 + 7.8000001907348633 + 71.800003051757813 * (double) num39), (float) (159.0 + 114.0 * (double) num40), 64f, 30f), strArray[index11]))
+            int num39 = index % 4;
+            int num40 = index / 4;
+            GUI.DrawTexture(new Rect((float) ((double) num1 + 7.8000001907348633 + 71.800003051757813 * (double) num39), (float) (90.0 + 114.0 * (double) num40), 64f, 64f), (Texture) this.RCLoadTexture("p" + strArray[index]));
+            if (GUI.Button(new Rect((float) ((double) num1 + 7.8000001907348633 + 71.800003051757813 * (double) num39), (float) (159.0 + 114.0 * (double) num40), 64f, 30f), strArray[index]))
             {
               flag1 = true;
-              this.selectedObj = (GameObject) Object.Instantiate(FengGameManagerMKII.RCassets.Load(strArray[index11]));
-              if (stringList.Contains(strArray[index11]))
-                ((Object) this.selectedObj).name = "customb," + strArray[index11];
+              this.selectedObj = (GameObject) Object.Instantiate(FengGameManagerMKII.RCassets.Load(strArray[index]));
+              if (stringList.Contains(strArray[index]))
+                ((Object) this.selectedObj).name = "customb," + strArray[index];
               else
-                ((Object) this.selectedObj).name = "custom," + strArray[index11];
+                ((Object) this.selectedObj).name = "custom," + strArray[index];
             }
           }
           GUI.EndScrollView();
@@ -4259,77 +4255,77 @@ internal class FengGameManagerMKII : MonoBehaviour
             "Tube"
           };
           string[] strArray14 = new string[12];
-          for (int index12 = 0; index12 < strArray14.Length; ++index12)
-            strArray14[index12] = "start" + strArray13[index12];
+          for (int index = 0; index < strArray14.Length; ++index)
+            strArray14[index] = "start" + strArray13[index];
           float num41 = (float) (110.0 + 114.0 * (double) ((strArray14.Length - 1) / 4)) * 4f + 200f;
           this.scroll = GUI.BeginScrollView(new Rect(num1, 90f, 303f, 350f), this.scroll, new Rect(num1, 90f, 300f, num41), true, true);
           GUI.Label(new Rect(num1 + 90f, 90f, 200f, 22f), "Racing Start Barrier");
           int num42 = 125;
-          for (int index13 = 0; index13 < strArray14.Length; ++index13)
+          for (int index = 0; index < strArray14.Length; ++index)
           {
-            int num43 = index13 % 4;
-            int num44 = index13 / 4;
-            GUI.DrawTexture(new Rect((float) ((double) num1 + 7.8000001907348633 + 71.800003051757813 * (double) num43), (float) num42 + 114f * (float) num44, 64f, 64f), (Texture) this.RCLoadTexture("p" + strArray14[index13]));
-            if (GUI.Button(new Rect((float) ((double) num1 + 7.8000001907348633 + 71.800003051757813 * (double) num43), (float) ((double) num42 + 69.0 + 114.0 * (double) num44), 64f, 30f), strArray13[index13]))
+            int num43 = index % 4;
+            int num44 = index / 4;
+            GUI.DrawTexture(new Rect((float) ((double) num1 + 7.8000001907348633 + 71.800003051757813 * (double) num43), (float) num42 + 114f * (float) num44, 64f, 64f), (Texture) this.RCLoadTexture("p" + strArray14[index]));
+            if (GUI.Button(new Rect((float) ((double) num1 + 7.8000001907348633 + 71.800003051757813 * (double) num43), (float) ((double) num42 + 69.0 + 114.0 * (double) num44), 64f, 30f), strArray13[index]))
             {
               flag1 = true;
               flag2 = true;
-              this.selectedObj = (GameObject) Object.Instantiate(FengGameManagerMKII.RCassets.Load(strArray14[index13]));
-              ((Object) this.selectedObj).name = "racing," + strArray14[index13];
+              this.selectedObj = (GameObject) Object.Instantiate(FengGameManagerMKII.RCassets.Load(strArray14[index]));
+              ((Object) this.selectedObj).name = "racing," + strArray14[index];
             }
           }
           int num45 = num42 + (114 * (strArray14.Length / 4) + 10);
           GUI.Label(new Rect(num1 + 93f, (float) num45, 200f, 22f), "Racing End Trigger");
           int num46 = num45 + 35;
-          for (int index14 = 0; index14 < strArray14.Length; ++index14)
-            strArray14[index14] = "end" + strArray13[index14];
-          for (int index15 = 0; index15 < strArray14.Length; ++index15)
+          for (int index = 0; index < strArray14.Length; ++index)
+            strArray14[index] = "end" + strArray13[index];
+          for (int index = 0; index < strArray14.Length; ++index)
           {
-            int num47 = index15 % 4;
-            int num48 = index15 / 4;
-            GUI.DrawTexture(new Rect((float) ((double) num1 + 7.8000001907348633 + 71.800003051757813 * (double) num47), (float) num46 + 114f * (float) num48, 64f, 64f), (Texture) this.RCLoadTexture("p" + strArray14[index15]));
-            if (GUI.Button(new Rect((float) ((double) num1 + 7.8000001907348633 + 71.800003051757813 * (double) num47), (float) ((double) num46 + 69.0 + 114.0 * (double) num48), 64f, 30f), strArray13[index15]))
+            int num47 = index % 4;
+            int num48 = index / 4;
+            GUI.DrawTexture(new Rect((float) ((double) num1 + 7.8000001907348633 + 71.800003051757813 * (double) num47), (float) num46 + 114f * (float) num48, 64f, 64f), (Texture) this.RCLoadTexture("p" + strArray14[index]));
+            if (GUI.Button(new Rect((float) ((double) num1 + 7.8000001907348633 + 71.800003051757813 * (double) num47), (float) ((double) num46 + 69.0 + 114.0 * (double) num48), 64f, 30f), strArray13[index]))
             {
               flag1 = true;
               flag2 = true;
-              this.selectedObj = (GameObject) Object.Instantiate(FengGameManagerMKII.RCassets.Load(strArray14[index15]));
-              ((Object) this.selectedObj).name = "racing," + strArray14[index15];
+              this.selectedObj = (GameObject) Object.Instantiate(FengGameManagerMKII.RCassets.Load(strArray14[index]));
+              ((Object) this.selectedObj).name = "racing," + strArray14[index];
             }
           }
           int num49 = num46 + (114 * (strArray14.Length / 4) + 10);
           GUI.Label(new Rect(num1 + 113f, (float) num49, 200f, 22f), "Kill Trigger");
           int num50 = num49 + 35;
-          for (int index16 = 0; index16 < strArray14.Length; ++index16)
-            strArray14[index16] = "kill" + strArray13[index16];
-          for (int index17 = 0; index17 < strArray14.Length; ++index17)
+          for (int index = 0; index < strArray14.Length; ++index)
+            strArray14[index] = "kill" + strArray13[index];
+          for (int index = 0; index < strArray14.Length; ++index)
           {
-            int num51 = index17 % 4;
-            int num52 = index17 / 4;
-            GUI.DrawTexture(new Rect((float) ((double) num1 + 7.8000001907348633 + 71.800003051757813 * (double) num51), (float) num50 + 114f * (float) num52, 64f, 64f), (Texture) this.RCLoadTexture("p" + strArray14[index17]));
-            if (GUI.Button(new Rect((float) ((double) num1 + 7.8000001907348633 + 71.800003051757813 * (double) num51), (float) ((double) num50 + 69.0 + 114.0 * (double) num52), 64f, 30f), strArray13[index17]))
+            int num51 = index % 4;
+            int num52 = index / 4;
+            GUI.DrawTexture(new Rect((float) ((double) num1 + 7.8000001907348633 + 71.800003051757813 * (double) num51), (float) num50 + 114f * (float) num52, 64f, 64f), (Texture) this.RCLoadTexture("p" + strArray14[index]));
+            if (GUI.Button(new Rect((float) ((double) num1 + 7.8000001907348633 + 71.800003051757813 * (double) num51), (float) ((double) num50 + 69.0 + 114.0 * (double) num52), 64f, 30f), strArray13[index]))
             {
               flag1 = true;
               flag2 = true;
-              this.selectedObj = (GameObject) Object.Instantiate(FengGameManagerMKII.RCassets.Load(strArray14[index17]));
-              ((Object) this.selectedObj).name = "racing," + strArray14[index17];
+              this.selectedObj = (GameObject) Object.Instantiate(FengGameManagerMKII.RCassets.Load(strArray14[index]));
+              ((Object) this.selectedObj).name = "racing," + strArray14[index];
             }
           }
           int num53 = num50 + (114 * (strArray14.Length / 4) + 10);
           GUI.Label(new Rect(num1 + 95f, (float) num53, 200f, 22f), "Checkpoint Trigger");
           int num54 = num53 + 35;
-          for (int index18 = 0; index18 < strArray14.Length; ++index18)
-            strArray14[index18] = "checkpoint" + strArray13[index18];
-          for (int index19 = 0; index19 < strArray14.Length; ++index19)
+          for (int index = 0; index < strArray14.Length; ++index)
+            strArray14[index] = "checkpoint" + strArray13[index];
+          for (int index = 0; index < strArray14.Length; ++index)
           {
-            int num55 = index19 % 4;
-            int num56 = index19 / 4;
-            GUI.DrawTexture(new Rect((float) ((double) num1 + 7.8000001907348633 + 71.800003051757813 * (double) num55), (float) num54 + 114f * (float) num56, 64f, 64f), (Texture) this.RCLoadTexture("p" + strArray14[index19]));
-            if (GUI.Button(new Rect((float) ((double) num1 + 7.8000001907348633 + 71.800003051757813 * (double) num55), (float) ((double) num54 + 69.0 + 114.0 * (double) num56), 64f, 30f), strArray13[index19]))
+            int num55 = index % 4;
+            int num56 = index / 4;
+            GUI.DrawTexture(new Rect((float) ((double) num1 + 7.8000001907348633 + 71.800003051757813 * (double) num55), (float) num54 + 114f * (float) num56, 64f, 64f), (Texture) this.RCLoadTexture("p" + strArray14[index]));
+            if (GUI.Button(new Rect((float) ((double) num1 + 7.8000001907348633 + 71.800003051757813 * (double) num55), (float) ((double) num54 + 69.0 + 114.0 * (double) num56), 64f, 30f), strArray13[index]))
             {
               flag1 = true;
               flag2 = true;
-              this.selectedObj = (GameObject) Object.Instantiate(FengGameManagerMKII.RCassets.Load(strArray14[index19]));
-              ((Object) this.selectedObj).name = "racing," + strArray14[index19];
+              this.selectedObj = (GameObject) Object.Instantiate(FengGameManagerMKII.RCassets.Load(strArray14[index]));
+              ((Object) this.selectedObj).name = "racing," + strArray14[index];
             }
           }
           GUI.EndScrollView();
@@ -4365,52 +4361,46 @@ internal class FengGameManagerMKII : MonoBehaviour
               float result3;
               if (float.TryParse(((string) FengGameManagerMKII.settingsOld[69]).Substring(11), out result3))
                 num57 = result3;
-              Renderer[] componentsInChildren = this.selectedObj.GetComponentsInChildren<Renderer>();
-              for (index8 = 0; index8 < componentsInChildren.Length; ++index8)
+              foreach (Renderer componentsInChild in this.selectedObj.GetComponentsInChildren<Renderer>())
               {
-                Renderer renderer = componentsInChildren[index8];
-                renderer.material = (Material) FengGameManagerMKII.RCassets.Load("transparent");
-                renderer.material.mainTextureScale = new Vector2(renderer.material.mainTextureScale.x * Convert.ToSingle((string) FengGameManagerMKII.settingsOld[79]), renderer.material.mainTextureScale.y * Convert.ToSingle((string) FengGameManagerMKII.settingsOld[80]));
+                componentsInChild.material = (Material) FengGameManagerMKII.RCassets.Load("transparent");
+                componentsInChild.material.mainTextureScale = new Vector2(componentsInChild.material.mainTextureScale.x * Convert.ToSingle((string) FengGameManagerMKII.settingsOld[79]), componentsInChild.material.mainTextureScale.y * Convert.ToSingle((string) FengGameManagerMKII.settingsOld[80]));
               }
             }
             else
             {
-              Renderer[] componentsInChildren = this.selectedObj.GetComponentsInChildren<Renderer>();
-              for (index8 = 0; index8 < componentsInChildren.Length; ++index8)
+              foreach (Renderer componentsInChild in this.selectedObj.GetComponentsInChildren<Renderer>())
               {
-                Renderer renderer = componentsInChildren[index8];
-                if (!((Object) renderer).name.Contains("Particle System") || !((Object) this.selectedObj).name.Contains("aot_supply"))
+                if (!((Object) componentsInChild).name.Contains("Particle System") || !((Object) this.selectedObj).name.Contains("aot_supply"))
                 {
-                  renderer.material = (Material) FengGameManagerMKII.RCassets.Load((string) FengGameManagerMKII.settingsOld[69]);
-                  renderer.material.mainTextureScale = new Vector2(renderer.material.mainTextureScale.x * Convert.ToSingle((string) FengGameManagerMKII.settingsOld[79]), renderer.material.mainTextureScale.y * Convert.ToSingle((string) FengGameManagerMKII.settingsOld[80]));
+                  componentsInChild.material = (Material) FengGameManagerMKII.RCassets.Load((string) FengGameManagerMKII.settingsOld[69]);
+                  componentsInChild.material.mainTextureScale = new Vector2(componentsInChild.material.mainTextureScale.x * Convert.ToSingle((string) FengGameManagerMKII.settingsOld[79]), componentsInChild.material.mainTextureScale.y * Convert.ToSingle((string) FengGameManagerMKII.settingsOld[80]));
                 }
               }
             }
           }
           float num58 = 1f;
-          MeshFilter[] componentsInChildren1 = this.selectedObj.GetComponentsInChildren<MeshFilter>();
-          for (index8 = 0; index8 < componentsInChildren1.Length; ++index8)
+          foreach (MeshFilter componentsInChild in this.selectedObj.GetComponentsInChildren<MeshFilter>())
           {
-            MeshFilter meshFilter = componentsInChildren1[index8];
             if (((Object) this.selectedObj).name.StartsWith("customb"))
             {
               double num59 = (double) num58;
-              Bounds bounds1 = meshFilter.mesh.bounds;
+              Bounds bounds1 = componentsInChild.mesh.bounds;
               double y = (double) ((Bounds) ref bounds1).size.y;
               if (num59 < y)
               {
-                Bounds bounds2 = meshFilter.mesh.bounds;
+                Bounds bounds2 = componentsInChild.mesh.bounds;
                 num58 = ((Bounds) ref bounds2).size.y;
               }
             }
             else
             {
               double num60 = (double) num58;
-              Bounds bounds3 = meshFilter.mesh.bounds;
+              Bounds bounds3 = componentsInChild.mesh.bounds;
               double z = (double) ((Bounds) ref bounds3).size.z;
               if (num60 < z)
               {
-                Bounds bounds4 = meshFilter.mesh.bounds;
+                Bounds bounds4 = componentsInChild.mesh.bounds;
                 num58 = ((Bounds) ref bounds4).size.z;
               }
             }
@@ -4420,13 +4410,12 @@ internal class FengGameManagerMKII : MonoBehaviour
           {
             // ISSUE: explicit constructor call
             ((Color) ref color).\u002Ector((float) FengGameManagerMKII.settingsOld[73], (float) FengGameManagerMKII.settingsOld[74], (float) FengGameManagerMKII.settingsOld[75], num57);
-            MeshFilter[] componentsInChildren2 = this.selectedObj.GetComponentsInChildren<MeshFilter>();
-            for (index8 = 0; index8 < componentsInChildren2.Length; ++index8)
+            foreach (MeshFilter componentsInChild in this.selectedObj.GetComponentsInChildren<MeshFilter>())
             {
-              Mesh mesh = componentsInChildren2[index8].mesh;
+              Mesh mesh = componentsInChild.mesh;
               Color[] colorArray = new Color[mesh.vertexCount];
-              for (int index20 = 0; index20 < mesh.vertexCount; ++index20)
-                colorArray[index20] = color;
+              for (int index = 0; index < mesh.vertexCount; ++index)
+                colorArray[index] = color;
               mesh.colors = colorArray;
             }
           }
@@ -7678,54 +7667,51 @@ label_1:
     IN_GAME_MAIN_CAMERA component = ((Component) Camera.main).GetComponent<IN_GAME_MAIN_CAMERA>();
     component.setMainObject(PhotonNetwork.Instantiate("AOTTG_HERO 1", position, new Quaternion(0.0f, 0.0f, 0.0f, 1f), 0));
     string upper = this.myLastHero.ToUpper();
-    switch (upper)
+    if (upper == "SET 1" || upper == "SET 2" || upper == "SET 3")
     {
-      case "SET 1":
-      case "SET 2":
-      case "SET 3":
-        HeroCostume heroCostume1 = CostumeConeveter.LocalDataToHeroCostume(upper);
-        heroCostume1.checkstat();
-        CostumeConeveter.HeroCostumeToLocalData(heroCostume1, upper);
-        if (heroCostume1.uniform_type == UNIFORM_TYPE.CasualAHSS && SettingsManager.LegacyGameSettings.BombModeEnabled.Value)
-          heroCostume1 = HeroCostume.costume[6];
-        ((Component) component.main_object.GetComponent<HERO>()).GetComponent<HERO_SETUP>().init();
-        if (heroCostume1 != null)
+      HeroCostume heroCostume1 = CostumeConeveter.LocalDataToHeroCostume(upper);
+      heroCostume1.checkstat();
+      CostumeConeveter.HeroCostumeToLocalData(heroCostume1, upper);
+      if (heroCostume1.uniform_type == UNIFORM_TYPE.CasualAHSS && SettingsManager.LegacyGameSettings.BombModeEnabled.Value)
+        heroCostume1 = HeroCostume.costume[6];
+      ((Component) component.main_object.GetComponent<HERO>()).GetComponent<HERO_SETUP>().init();
+      if (heroCostume1 != null)
+      {
+        ((Component) component.main_object.GetComponent<HERO>()).GetComponent<HERO_SETUP>().myCostume = heroCostume1;
+        ((Component) component.main_object.GetComponent<HERO>()).GetComponent<HERO_SETUP>().myCostume.stat = heroCostume1.stat;
+      }
+      else
+      {
+        HeroCostume heroCostume2 = HeroCostume.costumeOption[3];
+        ((Component) component.main_object.GetComponent<HERO>()).GetComponent<HERO_SETUP>().myCostume = heroCostume2;
+        ((Component) component.main_object.GetComponent<HERO>()).GetComponent<HERO_SETUP>().myCostume.stat = HeroStat.getInfo(heroCostume2.name.ToUpper());
+      }
+      ((Component) component.main_object.GetComponent<HERO>()).GetComponent<HERO_SETUP>().setCharacterComponent();
+      component.main_object.GetComponent<HERO>().setStat2();
+      component.main_object.GetComponent<HERO>().setSkillHUDPosition2();
+    }
+    else
+    {
+      for (int index1 = 0; index1 < HeroCostume.costume.Length; ++index1)
+      {
+        if (HeroCostume.costume[index1].name.ToUpper() == upper.ToUpper())
         {
-          ((Component) component.main_object.GetComponent<HERO>()).GetComponent<HERO_SETUP>().myCostume = heroCostume1;
-          ((Component) component.main_object.GetComponent<HERO>()).GetComponent<HERO_SETUP>().myCostume.stat = heroCostume1.stat;
+          int index2 = HeroCostume.costume[index1].id;
+          if (upper.ToUpper() != "AHSS")
+            index2 += CheckBoxCostume.costumeSet - 1;
+          if (HeroCostume.costume[index2].name != HeroCostume.costume[index1].name)
+            index2 = HeroCostume.costume[index1].id + 1;
+          if (SettingsManager.LegacyGameSettings.BombModeEnabled.Value && upper.ToUpper() == "AHSS")
+            index2 = 6;
+          ((Component) component.main_object.GetComponent<HERO>()).GetComponent<HERO_SETUP>().init();
+          ((Component) component.main_object.GetComponent<HERO>()).GetComponent<HERO_SETUP>().myCostume = HeroCostume.costume[index2];
+          ((Component) component.main_object.GetComponent<HERO>()).GetComponent<HERO_SETUP>().myCostume.stat = HeroStat.getInfo(HeroCostume.costume[index2].name.ToUpper());
+          ((Component) component.main_object.GetComponent<HERO>()).GetComponent<HERO_SETUP>().setCharacterComponent();
+          component.main_object.GetComponent<HERO>().setStat2();
+          component.main_object.GetComponent<HERO>().setSkillHUDPosition2();
+          break;
         }
-        else
-        {
-          HeroCostume heroCostume2 = HeroCostume.costumeOption[3];
-          ((Component) component.main_object.GetComponent<HERO>()).GetComponent<HERO_SETUP>().myCostume = heroCostume2;
-          ((Component) component.main_object.GetComponent<HERO>()).GetComponent<HERO_SETUP>().myCostume.stat = HeroStat.getInfo(heroCostume2.name.ToUpper());
-        }
-        ((Component) component.main_object.GetComponent<HERO>()).GetComponent<HERO_SETUP>().setCharacterComponent();
-        component.main_object.GetComponent<HERO>().setStat2();
-        component.main_object.GetComponent<HERO>().setSkillHUDPosition2();
-        break;
-      default:
-        for (int index1 = 0; index1 < HeroCostume.costume.Length; ++index1)
-        {
-          if (HeroCostume.costume[index1].name.ToUpper() == upper.ToUpper())
-          {
-            int index2 = HeroCostume.costume[index1].id;
-            if (upper.ToUpper() != "AHSS")
-              index2 += CheckBoxCostume.costumeSet - 1;
-            if (HeroCostume.costume[index2].name != HeroCostume.costume[index1].name)
-              index2 = HeroCostume.costume[index1].id + 1;
-            if (SettingsManager.LegacyGameSettings.BombModeEnabled.Value && upper.ToUpper() == "AHSS")
-              index2 = 6;
-            ((Component) component.main_object.GetComponent<HERO>()).GetComponent<HERO_SETUP>().init();
-            ((Component) component.main_object.GetComponent<HERO>()).GetComponent<HERO_SETUP>().myCostume = HeroCostume.costume[index2];
-            ((Component) component.main_object.GetComponent<HERO>()).GetComponent<HERO_SETUP>().myCostume.stat = HeroStat.getInfo(HeroCostume.costume[index2].name.ToUpper());
-            ((Component) component.main_object.GetComponent<HERO>()).GetComponent<HERO_SETUP>().setCharacterComponent();
-            component.main_object.GetComponent<HERO>().setStat2();
-            component.main_object.GetComponent<HERO>().setSkillHUDPosition2();
-            break;
-          }
-        }
-        break;
+      }
     }
     CostumeConeveter.HeroCostumeToPhotonData2(((Component) component.main_object.GetComponent<HERO>()).GetComponent<HERO_SETUP>().myCostume, PhotonNetwork.player);
     if (IN_GAME_MAIN_CAMERA.gamemode == GAMEMODE.PVP_CAPTURE)
@@ -8055,12 +8041,8 @@ label_1:
     this.cT = new ArrayList();
     this.hooks = new ArrayList();
     this.name = string.Empty;
-    int index;
     if (FengGameManagerMKII.nameField == null)
-    {
-      index = Random.Range(0, 100000);
-      FengGameManagerMKII.nameField = "GUEST" + index.ToString();
-    }
+      FengGameManagerMKII.nameField = "GUEST" + Random.Range(0, 100000).ToString();
     if (FengGameManagerMKII.privateServerField == null)
       FengGameManagerMKII.privateServerField = string.Empty;
     if (FengGameManagerMKII.privateLobbyField == null)
@@ -8136,10 +8118,8 @@ label_1:
     };
     if (!SettingsManager.GraphicsSettings.AnimatedIntro.Value)
       stringList.AddRange((IEnumerable<string>) collection);
-    Object[] objectsOfType = Object.FindObjectsOfType(typeof (GameObject));
-    for (index = 0; index < objectsOfType.Length; ++index)
+    foreach (GameObject gameObject in Object.FindObjectsOfType(typeof (GameObject)))
     {
-      GameObject gameObject = (GameObject) objectsOfType[index];
       foreach (string str in stringList)
       {
         if (((Object) gameObject).name.Contains(str))

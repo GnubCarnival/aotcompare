@@ -160,9 +160,8 @@ public class UIInput : MonoBehaviour
       Transform cachedTransform = this.label.cachedTransform;
       Vector3 vector3_1 = Vector2.op_Implicit(this.label.pivotOffset);
       vector3_1.y += this.label.relativeSize.y;
-      Vector3 vector3_2 = vector3_1;
-      Vector3 vector3_3 = cachedTransform.TransformPoint(vector3_2);
-      Input.compositionCursorPos = Vector2.op_Implicit(UICamera.currentCamera.WorldToScreenPoint(vector3_3));
+      Vector3 vector3_2 = cachedTransform.TransformPoint(vector3_1);
+      Input.compositionCursorPos = Vector2.op_Implicit(UICamera.currentCamera.WorldToScreenPoint(vector3_2));
       this.UpdateLabel();
     }
     else

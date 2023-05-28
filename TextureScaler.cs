@@ -13,12 +13,7 @@ public class TextureScaler
   {
     Color[] pixels = tex.GetPixels();
     Color[] newColors = new Color[newWidth * newHeight];
-    Color[] newColors1 = newColors;
-    int width = ((Texture) tex).width;
-    int height = ((Texture) tex).height;
-    int newWidth1 = newWidth;
-    int newHeight1 = newHeight;
-    TextureScaler.ThreadData parameter = new TextureScaler.ThreadData(pixels, newColors1, width, height, newWidth1, newHeight1);
+    TextureScaler.ThreadData parameter = new TextureScaler.ThreadData(pixels, newColors, ((Texture) tex).width, ((Texture) tex).height, newWidth, newHeight);
     Thread thread = new Thread(new ParameterizedThreadStart(TextureScaler.BilinearScale));
     thread.Start((object) parameter);
     while (thread.IsAlive)

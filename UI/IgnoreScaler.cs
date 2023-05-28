@@ -17,8 +17,7 @@ namespace UI
       float num = SettingsManager.UISettings.UIMasterScale.Value;
       RectTransform component = ((Component) this).GetComponent<RectTransform>();
       this.Scale = 1f / num;
-      Vector3 vector3 = Vector2.op_Implicit(new Vector2(this.Scale, this.Scale));
-      ((Transform) component).localScale = vector3;
+      ((Transform) component).localScale = Vector2.op_Implicit(new Vector2(this.Scale, this.Scale));
     }
   }
 }

@@ -23,7 +23,7 @@ public class BloodSplatterScript : MonoBehaviour
     if (!Input.GetMouseButtonDown(0))
       return;
     this.bloodRotation.Rotate(0.0f, (float) this.bloodLocalRotationYOffset, 0.0f);
-    Object.Instantiate((Object) this.bloodPrefab, this.bloodPosition.position, this.bloodRotation.rotation);
+    Transform transform = Object.Instantiate((Object) this.bloodPrefab, this.bloodPosition.position, this.bloodRotation.rotation) as Transform;
     this.bloodInstances = GameObject.FindGameObjectsWithTag("blood");
     if (this.bloodInstances.Length < this.maxAmountBloodPrefabs)
       return;

@@ -29,8 +29,10 @@ public class EffectController : MonoBehaviour
         break;
       case "cyclone":
         Xffect component1 = ((Component) this.EffectCache.GetObject(eftname)).GetComponent<Xffect>();
+        Xffect xffect = component1;
         Vector3 faceDirection = this.GetFaceDirection();
-        component1.SetDirectionAxis(((Vector3) ref faceDirection).normalized);
+        Vector3 normalized = ((Vector3) ref faceDirection).normalized;
+        xffect.SetDirectionAxis(normalized);
         component1.Active();
         break;
       case "crystal":

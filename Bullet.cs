@@ -203,19 +203,18 @@ internal class Bullet : MonoBehaviour
     float num2 = 30f;
     float num3 = 0.5f;
     num1 = 30f;
-    double num4 = 0.05000000074505806 + (double) this.spiralcount * 0.029999999329447746;
+    float num4 = (float) (0.05000000074505806 + (double) this.spiralcount * 0.029999999329447746);
     float num5 = this.spiralcount >= 5 ? (float) (1.2000000476837158 + (double) (60 - this.spiralcount) * 0.10000000149011612) : Vector2.Distance(new Vector2(masterposition.x, masterposition.z), new Vector2(((Component) this).gameObject.transform.position.x, ((Component) this).gameObject.transform.position.z));
     float num6 = num3 - (float) this.spiralcount * 0.06f;
     float num7 = num5 / num2;
-    double num8 = (double) num2;
-    float num9 = (float) (num4 / num8 * 2.0 * 3.1415929794311523);
-    float num10 = num6 * 6.283185f;
+    float num8 = (float) ((double) (num4 / num2) * 2.0 * 3.1415929794311523);
+    float num9 = num6 * 6.283185f;
     this.spiralNodes = new ArrayList();
     for (int index = 1; (double) index <= (double) num2; ++index)
     {
-      float num11 = (float) ((double) index * (double) num7 * (1.0 + 0.05000000074505806 * (double) index));
-      double num12 = (double) index * (double) num9 + (double) num10 + 1.2566369771957397 + (double) masterrotation.y * 0.017300000414252281;
-      this.spiralNodes.Add((object) new Vector3(Mathf.Cos((float) num12) * num11, 0.0f, -Mathf.Sin((float) num12) * num11));
+      float num10 = (float) ((double) index * (double) num7 * (1.0 + 0.05000000074505806 * (double) index));
+      float num11 = (float) ((double) index * (double) num8 + (double) num9 + 1.2566369771957397 + (double) masterrotation.y * 0.017300000414252281);
+      this.spiralNodes.Add((object) new Vector3(Mathf.Cos(num11) * num10, 0.0f, -Mathf.Sin(num11) * num10));
     }
   }
 
@@ -459,12 +458,12 @@ internal class Bullet : MonoBehaviour
         Vector3.op_Addition(((Component) this).transform.position, this.myRef.transform.position);
         Vector3 velocity = this.master.rigidbody.velocity;
         float magnitude1 = ((Vector3) ref velocity).magnitude;
-        double magnitude2 = (double) ((Vector3) ref vector3).magnitude;
-        int num1 = Mathf.Clamp((int) ((magnitude2 + (double) magnitude1) / 5.0), 2, 6);
+        float magnitude2 = ((Vector3) ref vector3).magnitude;
+        int num1 = Mathf.Clamp((int) (((double) magnitude2 + (double) magnitude1) / 5.0), 2, 6);
         this.lineRenderer.SetVertexCount(num1);
         this.lineRenderer.SetPosition(0, this.myRef.transform.position);
         int num2 = 1;
-        float num3 = Mathf.Pow((float) magnitude2, 0.3f);
+        float num3 = Mathf.Pow(magnitude2, 0.3f);
         for (; num2 < num1; ++num2)
         {
           int num4 = num1 / 2;

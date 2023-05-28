@@ -123,10 +123,10 @@ public abstract class UITweener : IgnoreTimeScale
       if (this.steeperCurves)
       {
         float num1 = (float) ((double) val * 2.0 - 1.0);
-        double num2 = (double) Mathf.Sign(num1);
+        float num2 = Mathf.Sign(num1);
         float num3 = 1f - Mathf.Abs(num1);
-        double num4 = 1.0 - (double) num3 * (double) num3;
-        val = (float) (num2 * num4 * 0.5 + 0.5);
+        float num4 = (float) (1.0 - (double) num3 * (double) num3);
+        val = (float) ((double) num2 * (double) num4 * 0.5 + 0.5);
       }
     }
     else if (this.method == UITweener.Method.BounceIn)

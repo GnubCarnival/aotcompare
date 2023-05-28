@@ -479,9 +479,9 @@ public class HERO_SETUP : MonoBehaviour
     if (id < 0)
       return;
     go.renderer.material = CharacterMaterials.materials[this.myCostume.face_texture];
-    double num1 = 0.125;
-    float num2 = (float) num1 * (float) (int) ((double) id / 8.0);
-    float num3 = (float) -num1 * (float) (id % 8);
+    float num1 = 0.125f;
+    float num2 = num1 * (float) (int) ((double) id / 8.0);
+    float num3 = -num1 * (float) (id % 8);
     go.renderer.material.mainTextureOffset = new Vector2(num2, num3);
   }
 

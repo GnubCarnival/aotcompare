@@ -73,19 +73,13 @@ namespace Settings
       {
         string publicAddress = this.PublicAddresses[region];
         this.CurrentMultiplayerServerType = MultiplayerServerType.Public;
-        int defaultPort = this.DefaultPort;
-        string empty = string.Empty;
-        string currentLobby = this.GetCurrentLobby();
-        PhotonNetwork.ConnectToMaster(publicAddress, defaultPort, empty, currentLobby);
+        PhotonNetwork.ConnectToMaster(publicAddress, this.DefaultPort, string.Empty, this.GetCurrentLobby());
       }
       else
       {
         string cloudAddress = this.CloudAddresses[region];
         this.CurrentMultiplayerServerType = MultiplayerServerType.Cloud;
-        int defaultPort = this.DefaultPort;
-        string appID = this.CustomAppId.Value;
-        string currentLobby = this.GetCurrentLobby();
-        PhotonNetwork.ConnectToMaster(cloudAddress, defaultPort, appID, currentLobby);
+        PhotonNetwork.ConnectToMaster(cloudAddress, this.DefaultPort, this.CustomAppId.Value, this.GetCurrentLobby());
       }
     }
 

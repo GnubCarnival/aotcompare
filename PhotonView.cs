@@ -136,10 +136,10 @@ public class PhotonView : MonoBehaviour
     get => this.ownerId * PhotonNetwork.MAX_VIEW_IDS + this.subId;
     set
     {
-      int num = !this.didAwake ? 0 : (this.subId == 0 ? 1 : 0);
+      bool flag = this.didAwake && this.subId == 0;
       this.ownerId = value / PhotonNetwork.MAX_VIEW_IDS;
       this.subId = value % PhotonNetwork.MAX_VIEW_IDS;
-      if (num == 0)
+      if (!flag)
         return;
       PhotonNetwork.networkingPeer.RegisterPhotonView(this);
     }
