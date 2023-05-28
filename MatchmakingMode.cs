@@ -1,0 +1,11 @@
+﻿// Decompiled with JetBrains decompiler
+// Type: MatchmakingMode
+// Assembly: Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+
+
+public enum MatchmakingMode : byte
+{
+  FillRoom,
+  SerialMatching,
+  RandomMatching,
+}
