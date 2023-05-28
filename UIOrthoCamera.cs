@@ -25,7 +25,7 @@ public class UIOrthoCamera : MonoBehaviour
     Rect rect1 = this.mCam.rect;
     float num1 = ((Rect) ref rect1).yMin * (float) Screen.height;
     Rect rect2 = this.mCam.rect;
-    float num2 = (float) (((double) ((Rect) ref rect2).yMax * (double) Screen.height - (double) num1) * 0.5) * this.mTrans.lossyScale.y;
+    float num2 = (float) (((double) (((Rect) ref rect2).yMax * (float) Screen.height) - (double) num1) * 0.5) * this.mTrans.lossyScale.y;
     if (Mathf.Approximately(this.mCam.orthographicSize, num2))
       return;
     this.mCam.orthographicSize = num2;

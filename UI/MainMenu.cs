@@ -113,8 +113,6 @@ namespace UI
     private void OnIntroButtonClick(string name)
     {
       this.HideAllPopups();
-      if (name == null)
-        return;
       // ISSUE: reference to a compiler-generated method
       switch (\u003CPrivateImplementationDetails\u003E.ComputeStringHash(name))
       {

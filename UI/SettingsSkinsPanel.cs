@@ -78,9 +78,6 @@ namespace UI
       SetNamePopup setNamePopup = ((SettingsPopup) this.Parent).SetNamePopup;
       ICustomSkinSettings setting = this._settings[this._currentCategoryPanelName.Value];
       // ISSUE: reference to a compiler-generated field
-      if (cDisplayClass60.name == null)
-        return;
-      // ISSUE: reference to a compiler-generated field
       switch (cDisplayClass60.name)
       {
         case "Create":
@@ -149,7 +146,7 @@ namespace UI
       int leftCount = 0)
     {
       ElementStyle style = new ElementStyle(titleWidth: titleWidth, themePanel: this.ThemePanel);
-      BaseSetSetting selectedSet = this.GetCurrentSettings().GetSelectedSet();
+      BaseSettingsContainer selectedSet = (BaseSettingsContainer) this.GetCurrentSettings().GetSelectedSet();
       string localeCategory = ((SettingsPopup) this.Parent).LocaleCategory;
       string str = "Skins." + this._currentCategoryPanelName.Value;
       int num = 1;

@@ -36,33 +36,32 @@ namespace Weather
         float x = directionNormalized.x;
         float y = directionNormalized.y;
         float z = directionNormalized.z;
-        double num1 = (double) Mathf.Abs(x);
+        float num1 = Mathf.Abs(x);
         float num2 = Mathf.Abs(y);
         float num3 = Mathf.Abs(z);
-        double num4 = (double) num2;
+        float num4;
         float num5;
         float num6;
-        float num7;
-        if (num1 >= num4 && (double) num2 >= (double) num3)
+        if ((double) num1 >= (double) num2 && (double) num2 >= (double) num3)
         {
+          num4 = 1f;
           num5 = 1f;
-          num6 = 1f;
-          num7 = (float) -((double) y * (double) num5 + (double) z * (double) num6) / x;
+          num6 = (float) -((double) y * (double) num4 + (double) z * (double) num5) / x;
         }
         else if ((double) num2 >= (double) num3)
         {
-          num7 = 1f;
           num6 = 1f;
-          num5 = (float) -((double) x * (double) num7 + (double) z * (double) num6) / y;
+          num5 = 1f;
+          num4 = (float) -((double) x * (double) num6 + (double) z * (double) num5) / y;
         }
         else
         {
-          num7 = 1f;
-          num5 = 1f;
-          num6 = (float) -((double) x * (double) num7 + (double) y * (double) num5) / z;
+          num6 = 1f;
+          num4 = 1f;
+          num5 = (float) -((double) x * (double) num6 + (double) y * (double) num4) / z;
         }
         ref Vector3 local = ref side;
-        Vector3 vector3 = new Vector3(num7, num5, num6);
+        Vector3 vector3 = new Vector3(num6, num4, num5);
         Vector3 normalized = ((Vector3) ref vector3).normalized;
         local = normalized;
       }

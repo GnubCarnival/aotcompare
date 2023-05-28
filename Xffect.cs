@@ -52,8 +52,12 @@ public class Xffect : MonoBehaviour
         }
         if (!this.MatDic.ContainsKey(((Object) material).name))
         {
-          GameObject gameObject = new GameObject("mesh " + ((Object) material).name);
-          gameObject.transform.parent = ((Component) this).transform;
+          GameObject gameObject = new GameObject("mesh " + ((Object) material).name)
+          {
+            transform = {
+              parent = ((Component) this).transform
+            }
+          };
           gameObject.AddComponent("MeshFilter");
           gameObject.AddComponent("MeshRenderer");
           MeshFilter component5 = (MeshFilter) gameObject.GetComponent(typeof (MeshFilter));

@@ -181,9 +181,7 @@ namespace UI
       EmoteTextPopup availablePopup = (EmoteTextPopup) this.GetAvailablePopup(this._emoteTextPopups);
       if (text.Length > 20)
         text = text.Substring(0, 20);
-      string text1 = text;
-      Transform parent1 = parent;
-      availablePopup.Show(text1, parent1);
+      availablePopup.Show(text, parent);
     }
 
     public void ShowEmoteEmoji(string emoji, Transform parent) => ((EmoteTextPopup) this.GetAvailablePopup(this._emoteEmojiPopups)).Show(emoji, parent);

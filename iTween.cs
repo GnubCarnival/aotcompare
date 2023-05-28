@@ -2599,12 +2599,13 @@ public class iTween : MonoBehaviour
     this.vector2s[1] = (Vector2) this.tweenArguments[(object) "to"];
     if (!this.tweenArguments.Contains((object) "speed"))
       return;
-    Vector3 vector3_1 = new Vector3(this.vector2s[0].x, this.vector2s[0].y, 0.0f);
+    Vector3 vector3_1;
+    // ISSUE: explicit constructor call
+    ((Vector3) ref vector3_1).\u002Ector(this.vector2s[0].x, this.vector2s[0].y, 0.0f);
     Vector3 vector3_2;
     // ISSUE: explicit constructor call
     ((Vector3) ref vector3_2).\u002Ector(this.vector2s[1].x, this.vector2s[1].y, 0.0f);
-    Vector3 vector3_3 = vector3_2;
-    this.time = Math.Abs(Vector3.Distance(vector3_1, vector3_3)) / (float) this.tweenArguments[(object) "speed"];
+    this.time = Math.Abs(Vector3.Distance(vector3_1, vector3_2)) / (float) this.tweenArguments[(object) "speed"];
   }
 
   private void GenerateVector3Targets()

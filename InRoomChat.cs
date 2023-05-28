@@ -24,7 +24,14 @@ public class InRoomChat : MonoBehaviour
   private float deltaTime;
   private int _maxLines = 15;
 
-  private void ShowFPS() => GUI.Label(new Rect((float) ((double) Screen.width / 4.0 - 75.0), 10f, 150f, 30f), string.Format("FPS: {0}", (object) (int) Math.Round(1.0 / (double) this.deltaTime)));
+  private void ShowFPS()
+  {
+    Rect rect;
+    // ISSUE: explicit constructor call
+    ((Rect) ref rect).\u002Ector((float) ((double) Screen.width / 4.0 - 75.0), 10f, 150f, 30f);
+    int num = (int) Math.Round(1.0 / (double) this.deltaTime);
+    GUI.Label(rect, string.Format("FPS: {0}", (object) num));
+  }
 
   private void ShowMessageWindow()
   {
@@ -228,12 +235,11 @@ public class InRoomChat : MonoBehaviour
             {
               foreach (PhotonPlayer player in PhotonNetwork.playerList)
               {
-                Hashtable hashtable = new Hashtable();
-                ((Dictionary<object, object>) hashtable).Add((object) PhotonPlayerProperty.kills, (object) 0);
-                ((Dictionary<object, object>) hashtable).Add((object) PhotonPlayerProperty.deaths, (object) 0);
-                ((Dictionary<object, object>) hashtable).Add((object) PhotonPlayerProperty.max_dmg, (object) 0);
-                ((Dictionary<object, object>) hashtable).Add((object) PhotonPlayerProperty.total_dmg, (object) 0);
-                Hashtable propertiesToSet = hashtable;
+                Hashtable propertiesToSet = new Hashtable();
+                ((Dictionary<object, object>) propertiesToSet).Add((object) PhotonPlayerProperty.kills, (object) 0);
+                ((Dictionary<object, object>) propertiesToSet).Add((object) PhotonPlayerProperty.deaths, (object) 0);
+                ((Dictionary<object, object>) propertiesToSet).Add((object) PhotonPlayerProperty.max_dmg, (object) 0);
+                ((Dictionary<object, object>) propertiesToSet).Add((object) PhotonPlayerProperty.total_dmg, (object) 0);
                 player.SetCustomProperties(propertiesToSet);
               }
               object[] objArray = new object[2]

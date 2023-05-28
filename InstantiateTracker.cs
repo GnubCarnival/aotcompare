@@ -415,9 +415,9 @@ public class InstantiateTracker
 
     public override bool KickWorthy()
     {
-      double num = (double) Time.time - (double) this.lastNameChange;
+      float num = Time.time - this.lastNameChange;
       this.lastNameChange = Time.time;
-      if (num >= 5.0)
+      if ((double) num >= 5.0)
         this.nameChanges = 0;
       ++this.nameChanges;
       return this.nameChanges > 5;

@@ -106,16 +106,7 @@ public class Sprite
     pool.UVs[vertStart + 1] = Vector2.zero;
     pool.UVs[vertStart + 2] = Vector2.zero;
     pool.UVs[vertStart + 3] = Vector2.zero;
-    int num1;
-    bool flag1 = (num1 = 1) != 0;
-    pool.VertChanged = num1 != 0;
-    int num2;
-    bool flag2 = (num2 = flag1 ? 1 : 0) != 0;
-    pool.ColorChanged = num2 != 0;
-    int num3;
-    bool flag3 = (num3 = flag2 ? 1 : 0) != 0;
-    pool.IndiceChanged = num3 != 0;
-    pool.UVChanged = flag3;
+    pool.UVChanged = pool.IndiceChanged = pool.ColorChanged = pool.VertChanged = true;
   }
 
   public void SetColor(Color c)
@@ -281,25 +272,27 @@ public class Sprite
         magnitude = ((Vector3) ref vector3_8).magnitude;
       }
       Vector3 vector3_9 = Vector3.op_Subtraction(vector3_5, vector3_6);
-      Vector3 vector3_10 = Vector3.Cross(vector3_9, Vector3.op_Subtraction(((Component) this.MainCamera).transform.position, vector3_5));
-      ((Vector3) ref vector3_10).Normalize();
-      vector3_10 = Vector3.op_Multiply(vector3_10, magnitude * 0.5f);
-      Vector3 vector3_11 = Vector3.Cross(vector3_9, Vector3.op_Subtraction(((Component) this.MainCamera).transform.position, vector3_6));
+      Vector3 vector3_10 = Vector3.op_Subtraction(((Component) this.MainCamera).transform.position, vector3_5);
+      Vector3 vector3_11 = Vector3.Cross(vector3_9, vector3_10);
       ((Vector3) ref vector3_11).Normalize();
       vector3_11 = Vector3.op_Multiply(vector3_11, magnitude * 0.5f);
+      Vector3 vector3_12 = Vector3.op_Subtraction(((Component) this.MainCamera).transform.position, vector3_6);
+      Vector3 vector3_13 = Vector3.Cross(vector3_9, vector3_12);
+      ((Vector3) ref vector3_13).Normalize();
+      Vector3 vector3_14 = Vector3.op_Multiply(vector3_13, magnitude * 0.5f);
       if (this.UVStretch == 0)
       {
-        vector3_1 = Vector3.op_Subtraction(vector3_5, vector3_10);
-        vector3_4 = Vector3.op_Addition(vector3_5, vector3_10);
-        vector3_2 = Vector3.op_Subtraction(vector3_6, vector3_11);
-        vector3_3 = Vector3.op_Addition(vector3_6, vector3_11);
+        vector3_1 = Vector3.op_Subtraction(vector3_5, vector3_11);
+        vector3_4 = Vector3.op_Addition(vector3_5, vector3_11);
+        vector3_2 = Vector3.op_Subtraction(vector3_6, vector3_14);
+        vector3_3 = Vector3.op_Addition(vector3_6, vector3_14);
       }
       else
       {
-        vector3_1 = Vector3.op_Subtraction(vector3_5, vector3_10);
-        vector3_2 = Vector3.op_Addition(vector3_5, vector3_10);
-        vector3_4 = Vector3.op_Subtraction(vector3_6, vector3_11);
-        vector3_3 = Vector3.op_Addition(vector3_6, vector3_11);
+        vector3_1 = Vector3.op_Subtraction(vector3_5, vector3_11);
+        vector3_2 = Vector3.op_Addition(vector3_5, vector3_11);
+        vector3_4 = Vector3.op_Subtraction(vector3_6, vector3_14);
+        vector3_3 = Vector3.op_Addition(vector3_6, vector3_14);
       }
     }
     pool.Vertices[vertStart] = vector3_1;

@@ -435,11 +435,10 @@ public static class PhotonNetwork
       return false;
     if (typedLobby == null)
       typedLobby = TypedLobby.Default;
-    int num = PhotonNetwork.networkingPeer.OpJoinLobby(typedLobby) ? 1 : 0;
-    if (num == 0)
-      return num != 0;
-    PhotonNetwork.networkingPeer.lobby = typedLobby;
-    return num != 0;
+    bool flag = PhotonNetwork.networkingPeer.OpJoinLobby(typedLobby);
+    if (flag)
+      PhotonNetwork.networkingPeer.lobby = typedLobby;
+    return flag;
   }
 
   public static bool JoinOrCreateRoom(

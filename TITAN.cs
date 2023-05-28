@@ -1461,10 +1461,9 @@ internal class TITAN : MonoBehaviour
     }
     if (!Object.op_Inequality((Object) gameObject, (Object) null))
       return;
-    GameObject hero1 = this.myHero;
+    GameObject hero = this.myHero;
     this.myHero = gameObject;
-    GameObject hero2 = this.myHero;
-    if (Object.op_Inequality((Object) hero1, (Object) hero2) && IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.MULTIPLAYER && PhotonNetwork.isMasterClient)
+    if (Object.op_Inequality((Object) hero, (Object) this.myHero) && IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.MULTIPLAYER && PhotonNetwork.isMasterClient)
     {
       if (Object.op_Equality((Object) this.myHero, (Object) null))
         this.photonView.RPC("setMyTarget", PhotonTargets.Others, (object) -1);
@@ -2137,8 +2136,8 @@ internal class TITAN : MonoBehaviour
             double num4 = (double) ((Quaternion) ref rotation2).eulerAngles.x + (double) num3;
             Quaternion rotation3 = this.head.rotation;
             double num5 = (double) ((Quaternion) ref rotation3).eulerAngles.y + (double) num2;
-            Quaternion rotation4 = this.head.rotation;
-            double z = (double) ((Quaternion) ref rotation4).eulerAngles.z;
+            rotation3 = this.head.rotation;
+            double z = (double) ((Quaternion) ref rotation3).eulerAngles.z;
             this.targetHeadRotation = Quaternion.Euler((float) num4, (float) num5, (float) z);
             if (!this.asClientLookTarget)
             {
@@ -2162,16 +2161,16 @@ internal class TITAN : MonoBehaviour
             Vector3 vector3 = Vector3.op_Subtraction(this.myHero.transform.position, ((Component) this).transform.position);
             this.angle = (float) (-(double) Mathf.Atan2(vector3.z, vector3.x) * 57.295780181884766);
             double angle = (double) this.angle;
-            Quaternion rotation5 = ((Component) this).transform.rotation;
-            double num6 = (double) ((Quaternion) ref rotation5).eulerAngles.y - 90.0;
+            Quaternion rotation4 = ((Component) this).transform.rotation;
+            double num6 = (double) ((Quaternion) ref rotation4).eulerAngles.y - 90.0;
             float num7 = Mathf.Clamp(-Mathf.DeltaAngle((float) angle, (float) num6), -40f, 40f);
             float num8 = Mathf.Clamp(Mathf.Atan2(this.neck.position.y + this.myLevel * 2f - this.myHero.transform.position.y, this.myDistance) * 57.29578f, -40f, 30f);
+            Quaternion rotation5 = this.head.rotation;
+            double num9 = (double) ((Quaternion) ref rotation5).eulerAngles.x + (double) num8;
             Quaternion rotation6 = this.head.rotation;
-            double num9 = (double) ((Quaternion) ref rotation6).eulerAngles.x + (double) num8;
-            Quaternion rotation7 = this.head.rotation;
-            double num10 = (double) ((Quaternion) ref rotation7).eulerAngles.y + (double) num7;
-            Quaternion rotation8 = this.head.rotation;
-            double z = (double) ((Quaternion) ref rotation8).eulerAngles.z;
+            double num10 = (double) ((Quaternion) ref rotation6).eulerAngles.y + (double) num7;
+            rotation6 = this.head.rotation;
+            double z = (double) ((Quaternion) ref rotation6).eulerAngles.z;
             this.targetHeadRotation = Quaternion.Euler((float) num9, (float) num10, (float) z);
           }
           if (!this.hasDie)
@@ -2186,16 +2185,16 @@ internal class TITAN : MonoBehaviour
           Vector3 vector3 = Vector3.op_Subtraction(this.myHero.transform.position, ((Component) this).transform.position);
           this.angle = (float) (-(double) Mathf.Atan2(vector3.z, vector3.x) * 57.295780181884766);
           double angle = (double) this.angle;
-          Quaternion rotation9 = ((Component) this).transform.rotation;
-          double num11 = (double) ((Quaternion) ref rotation9).eulerAngles.y - 90.0;
+          Quaternion rotation7 = ((Component) this).transform.rotation;
+          double num11 = (double) ((Quaternion) ref rotation7).eulerAngles.y - 90.0;
           float num12 = Mathf.Clamp(-Mathf.DeltaAngle((float) angle, (float) num11), -40f, 40f);
           float num13 = Mathf.Clamp(Mathf.Atan2(this.neck.position.y + this.myLevel * 2f - this.myHero.transform.position.y, this.myDistance) * 57.29578f, -40f, 30f);
-          Quaternion rotation10 = this.head.rotation;
-          double num14 = (double) ((Quaternion) ref rotation10).eulerAngles.x + (double) num13;
-          Quaternion rotation11 = this.head.rotation;
-          double num15 = (double) ((Quaternion) ref rotation11).eulerAngles.y + (double) num12;
-          Quaternion rotation12 = this.head.rotation;
-          double z = (double) ((Quaternion) ref rotation12).eulerAngles.z;
+          Quaternion rotation8 = this.head.rotation;
+          double num14 = (double) ((Quaternion) ref rotation8).eulerAngles.x + (double) num13;
+          Quaternion rotation9 = this.head.rotation;
+          double num15 = (double) ((Quaternion) ref rotation9).eulerAngles.y + (double) num12;
+          rotation9 = this.head.rotation;
+          double z = (double) ((Quaternion) ref rotation9).eulerAngles.z;
           this.targetHeadRotation = Quaternion.Euler((float) num14, (float) num15, (float) z);
         }
         this.oldHeadRotation = this.state == TitanState.attack || this.state == TitanState.hit || this.state == TitanState.hit_eye ? Quaternion.Lerp(this.oldHeadRotation, this.targetHeadRotation, Time.deltaTime * 20f) : Quaternion.Lerp(this.oldHeadRotation, this.targetHeadRotation, Time.deltaTime * 10f);
@@ -2225,8 +2224,8 @@ internal class TITAN : MonoBehaviour
         double num4 = (double) ((Quaternion) ref rotation2).eulerAngles.x + (double) num3;
         Quaternion rotation3 = this.head.rotation;
         double num5 = (double) ((Quaternion) ref rotation3).eulerAngles.y + (double) num2;
-        Quaternion rotation4 = this.head.rotation;
-        double z = (double) ((Quaternion) ref rotation4).eulerAngles.z;
+        rotation3 = this.head.rotation;
+        double z = (double) ((Quaternion) ref rotation3).eulerAngles.z;
         this.targetHeadRotation = Quaternion.Euler((float) num4, (float) num5, (float) z);
       }
       this.oldHeadRotation = !this._fastHeadRotation ? Quaternion.Lerp(this.oldHeadRotation, this.targetHeadRotation, Time.deltaTime * 10f) : Quaternion.Lerp(this.oldHeadRotation, this.targetHeadRotation, Time.deltaTime * 20f);
@@ -3999,12 +3998,12 @@ internal class TITAN : MonoBehaviour
               }
               else
               {
-                double y1 = (double) this.myHero.rigidbody.velocity.y;
+                float y1 = this.myHero.rigidbody.velocity.y;
                 float num6 = -20f;
                 float gravity = this.gravity;
                 float y2 = this.neck.position.y;
                 float num7 = (float) (((double) num6 - (double) gravity) * 0.5);
-                float num8 = (float) y1;
+                float num8 = y1;
                 float num9 = this.myHero.transform.position.y - y2;
                 float num10 = Mathf.Abs((float) (((double) Mathf.Sqrt((float) ((double) num8 * (double) num8 - 4.0 * (double) num7 * (double) num9)) - (double) num8) / (2.0 * (double) num7)));
                 Vector3 vector3_1 = Vector3.op_Addition(Vector3.op_Addition(this.myHero.transform.position, Vector3.op_Multiply(this.myHero.rigidbody.velocity, num10)), Vector3.op_Multiply(Vector3.op_Multiply(Vector3.op_Multiply(Vector3.op_Multiply(Vector3.up, 0.5f), num6), num10), num10));

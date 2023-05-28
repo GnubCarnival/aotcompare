@@ -65,12 +65,12 @@ namespace ApplicationManagers
 
     private static void SetFullscreen(bool fullscreen)
     {
-      int num = fullscreen != Screen.fullScreen ? 1 : 0;
+      bool flag = fullscreen != Screen.fullScreen;
       if (fullscreen && !Screen.fullScreen)
         Screen.SetResolution(FullscreenHandler.FullscreenWidth, FullscreenHandler.FullscreenHeight, true);
       else if (!fullscreen && Screen.fullScreen)
         Screen.SetResolution(FullscreenHandler.WindowedWidth, FullscreenHandler.WindowedHeight, false);
-      if (num == 0)
+      if (!flag)
         return;
       FullscreenHandler._instance.StartCoroutine(FullscreenHandler._instance.WaitAndRefreshHUD());
       CursorManager.RefreshCursorLock();

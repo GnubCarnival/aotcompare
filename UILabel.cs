@@ -152,9 +152,9 @@ public class UILabel : UIWidget
     if (this.effectStyle == UILabel.Effect.None)
       return;
     int size2 = verts.size;
-    double num = 1.0 / (double) this.mFont.size;
-    float x = (float) num * this.mEffectDistance.x;
-    float y = (float) num * this.mEffectDistance.y;
+    float num = 1f / (float) this.mFont.size;
+    float x = num * this.mEffectDistance.x;
+    float y = num * this.mEffectDistance.y;
     this.ApplyShadow(verts, uvs, cols, size1, size2, x, -y);
     if (this.effectStyle != UILabel.Effect.Outline)
       return;

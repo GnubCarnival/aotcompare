@@ -126,7 +126,7 @@ public class RockThrow : MonoBehaviour
         if (Object.op_Inequality((Object) gameObject.GetComponent<TITAN>(), (Object) null) && !gameObject.GetComponent<TITAN>().hasDie)
         {
           gameObject.GetComponent<TITAN>().hitAnkle();
-          Vector3 position1 = ((Component) this).transform.position;
+          Vector3 position = ((Component) this).transform.position;
           if (IN_GAME_MAIN_CAMERA.gametype == GAMETYPE.SINGLE)
           {
             gameObject.GetComponent<TITAN>().hitAnkle();
@@ -134,9 +134,7 @@ public class RockThrow : MonoBehaviour
           else
           {
             if (Object.op_Inequality((Object) ((Component) ((Component) this).transform.root).gameObject.GetComponent<EnemyfxIDcontainer>(), (Object) null) && Object.op_Inequality((Object) PhotonView.Find(((Component) ((Component) this).transform.root).gameObject.GetComponent<EnemyfxIDcontainer>().myOwnerViewID), (Object) null))
-            {
-              Vector3 position2 = ((Component) PhotonView.Find(((Component) ((Component) this).transform.root).gameObject.GetComponent<EnemyfxIDcontainer>().myOwnerViewID)).transform.position;
-            }
+              position = ((Component) PhotonView.Find(((Component) ((Component) this).transform.root).gameObject.GetComponent<EnemyfxIDcontainer>().myOwnerViewID)).transform.position;
             gameObject.GetComponent<HERO>().photonView.RPC("hitAnkleRPC", PhotonTargets.All);
           }
         }

@@ -874,11 +874,10 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
   {
     if (this.server != ServerConnection.NameServer)
       return false;
-    int num = this.OpGetRegions(this.mAppId) ? 1 : 0;
-    if (num == 0)
-      return num != 0;
-    this.AvailableRegions = (List<Region>) null;
-    return num != 0;
+    bool regions = this.OpGetRegions(this.mAppId);
+    if (regions)
+      this.AvailableRegions = (List<Region>) null;
+    return regions;
   }
 
   private void HandleEventLeave(int actorID)
@@ -916,8 +915,8 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
 
   private void LeftRoomCleanup()
   {
-    int num1 = this.mRoomToGetInto != null ? 1 : 0;
-    int num2 = this.mRoomToGetInto == null ? (PhotonNetwork.autoCleanUpPlayerObjects ? 1 : 0) : (this.mRoomToGetInto.autoCleanUp ? 1 : 0);
+    bool flag1 = this.mRoomToGetInto != null;
+    bool flag2 = this.mRoomToGetInto == null ? PhotonNetwork.autoCleanUpPlayerObjects : this.mRoomToGetInto.autoCleanUp;
     this.hasSwitchedMC = false;
     this.mRoomToGetInto = (Room) null;
     this.mActors = new Dictionary<int, PhotonPlayer>();
@@ -930,12 +929,12 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
     this.mGameListCopy = new RoomInfo[0];
     this.isFetchingFriends = false;
     this.ChangeLocalID(-1);
-    if (num2 != 0)
+    if (flag2)
     {
       this.LocalCleanupAnythingInstantiated(true);
       PhotonNetwork.manuallyAllocatedViewIds = new List<int>();
     }
-    if (num1 == 0)
+    if (!flag1)
       return;
     NetworkingPeer.SendMonoMessage(PhotonNetworkingMessage.OnLeftRoom);
   }
@@ -1737,9 +1736,9 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
     data[(object) (byte) 1] = (object) array;
     if (view.synchronization == ViewSynchronization.ReliableDeltaCompressed)
     {
-      int num = this.DeltaCompressionWrite(view, data) ? 1 : 0;
+      bool flag = this.DeltaCompressionWrite(view, data);
       view.lastOnSerializeDataSent = array;
-      if (num == 0)
+      if (!flag)
         return (Hashtable) null;
     }
     return data;

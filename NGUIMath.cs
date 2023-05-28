@@ -91,7 +91,7 @@ label_7:
     Vector2 pivotOffset = sprite.pivotOffset;
     Transform cachedTransform = sprite.cachedTransform;
     float num1 = (pivotOffset.x + 0.5f) * relativeSize.x;
-    double num2 = ((double) pivotOffset.y - 0.5) * (double) relativeSize.y;
+    float num2 = (pivotOffset.y - 0.5f) * relativeSize.y;
     Vector2 vector2 = Vector2.op_Multiply(relativeSize, 0.5f);
     float x = cachedTransform.localScale.x;
     float y = cachedTransform.localScale.y;
@@ -108,8 +108,8 @@ label_7:
     }
     float num3 = num1 - vector2.x + border.x;
     float num4 = num1 + vector2.x - border.z;
-    float num5 = (float) num2 - vector2.y + border.y;
-    float num6 = (float) num2 + vector2.y - border.w;
+    float num5 = num2 - vector2.y + border.y;
+    float num6 = num2 + vector2.y - border.w;
     Vector3 vector3_1;
     // ISSUE: explicit constructor call
     ((Vector3) ref vector3_1).\u002Ector(num3, num5, 0.0f);
@@ -120,19 +120,19 @@ label_7:
     ((Bounds) ref relativeInnerBounds).\u002Ector(vector3_3, Vector3.zero);
     // ISSUE: explicit constructor call
     ((Vector3) ref vector3_3).\u002Ector(num3, num6, 0.0f);
-    vector3_3 = cachedTransform.TransformPoint(vector3_3);
-    vector3_3 = ((Matrix4x4) ref worldToLocalMatrix).MultiplyPoint3x4(vector3_3);
-    ((Bounds) ref relativeInnerBounds).Encapsulate(vector3_3);
+    Vector3 vector3_4 = cachedTransform.TransformPoint(vector3_3);
+    Vector3 vector3_5 = ((Matrix4x4) ref worldToLocalMatrix).MultiplyPoint3x4(vector3_4);
+    ((Bounds) ref relativeInnerBounds).Encapsulate(vector3_5);
     // ISSUE: explicit constructor call
-    ((Vector3) ref vector3_3).\u002Ector(num4, num6, 0.0f);
-    vector3_3 = cachedTransform.TransformPoint(vector3_3);
-    vector3_3 = ((Matrix4x4) ref worldToLocalMatrix).MultiplyPoint3x4(vector3_3);
-    ((Bounds) ref relativeInnerBounds).Encapsulate(vector3_3);
+    ((Vector3) ref vector3_5).\u002Ector(num4, num6, 0.0f);
+    Vector3 vector3_6 = cachedTransform.TransformPoint(vector3_5);
+    Vector3 vector3_7 = ((Matrix4x4) ref worldToLocalMatrix).MultiplyPoint3x4(vector3_6);
+    ((Bounds) ref relativeInnerBounds).Encapsulate(vector3_7);
     // ISSUE: explicit constructor call
-    ((Vector3) ref vector3_3).\u002Ector(num4, num5, 0.0f);
-    vector3_3 = cachedTransform.TransformPoint(vector3_3);
-    vector3_3 = ((Matrix4x4) ref worldToLocalMatrix).MultiplyPoint3x4(vector3_3);
-    ((Bounds) ref relativeInnerBounds).Encapsulate(vector3_3);
+    ((Vector3) ref vector3_7).\u002Ector(num4, num5, 0.0f);
+    Vector3 vector3_8 = cachedTransform.TransformPoint(vector3_7);
+    Vector3 vector3_9 = ((Matrix4x4) ref worldToLocalMatrix).MultiplyPoint3x4(vector3_8);
+    ((Bounds) ref relativeInnerBounds).Encapsulate(vector3_9);
     return relativeInnerBounds;
   }
 

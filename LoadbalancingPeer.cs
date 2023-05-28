@@ -50,11 +50,10 @@ internal class LoadbalancingPeer : PhotonPeer
       if (authValues.AuthPostData != null)
         dictionary[(byte) 214] = authValues.AuthPostData;
     }
-    int num = this.OpCustom((byte) 230, dictionary, true, (byte) 0, this.IsEncryptionAvailable) ? 1 : 0;
-    if (num != 0)
-      return num != 0;
-    this.Listener.DebugReturn((DebugLevel) 1, "Error calling OpAuthenticate! Did not work. Check log output, CustomAuthenticationValues and if you're connected.");
-    return num != 0;
+    bool flag = this.OpCustom((byte) 230, dictionary, true, (byte) 0, this.IsEncryptionAvailable);
+    if (!flag)
+      this.Listener.DebugReturn((DebugLevel) 1, "Error calling OpAuthenticate! Did not work. Check log output, CustomAuthenticationValues and if you're connected.");
+    return flag;
   }
 
   public virtual bool OpChangeGroups(byte[] groupsToRemove, byte[] groupsToAdd)

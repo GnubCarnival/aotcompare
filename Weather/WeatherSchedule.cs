@@ -177,8 +177,8 @@ namespace Weather
       string[] strArray = item.Split('-');
       if (strArray.Length != 1)
         return new Color(float.Parse(strArray[0]), float.Parse(strArray[1]), float.Parse(strArray[2]), float.Parse(strArray[3]));
-      double num = (double) float.Parse(strArray[0]);
-      return new Color((float) num, (float) num, (float) num, 1f);
+      float num = float.Parse(strArray[0]);
+      return new Color(num, num, num, 1f);
     }
   }
 }

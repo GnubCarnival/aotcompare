@@ -27,8 +27,7 @@ public class ClickToMove : MonoBehaviour
       {
         Vector3 point = ((Ray) ref ray).GetPoint(num);
         this.targetPosition = ((Ray) ref ray).GetPoint(num);
-        Vector3 position = ((Component) this).transform.position;
-        ((Component) this).transform.rotation = Quaternion.LookRotation(Vector3.op_Subtraction(point, position));
+        ((Component) this).transform.rotation = Quaternion.LookRotation(Vector3.op_Subtraction(point, ((Component) this).transform.position));
       }
     }
     ((Component) this).transform.position = Vector3.Lerp(((Component) this).transform.position, this.targetPosition, Time.deltaTime * (float) this.smooth);

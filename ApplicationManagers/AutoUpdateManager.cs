@@ -33,13 +33,7 @@ namespace ApplicationManagers
       AutoUpdateManager.StartUpdate();
     }
 
-    public static void StartUpdate()
-    {
-      if (ApplicationConfig.DevelopmentMode)
-        AutoUpdateManager.Status = AutoUpdateStatus.Updated;
-      else
-        AutoUpdateManager._instance.StartCoroutine(AutoUpdateManager._instance.StartUpdateCoroutine());
-    }
+    public static void StartUpdate() => AutoUpdateManager.Status = AutoUpdateStatus.Updated;
 
     private IEnumerator StartUpdateCoroutine()
     {

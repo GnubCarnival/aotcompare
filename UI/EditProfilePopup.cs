@@ -85,13 +85,10 @@ namespace UI
 
     private void OnBottomBarButtonClick(string name)
     {
-      switch (name)
-      {
-        case "Save":
-          SettingsManager.ProfileSettings.Save();
-          this.Hide();
-          break;
-      }
+      if (!(name == "Save"))
+        return;
+      SettingsManager.ProfileSettings.Save();
+      this.Hide();
     }
   }
 }

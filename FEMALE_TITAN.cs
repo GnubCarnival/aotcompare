@@ -793,8 +793,8 @@ public class FEMALE_TITAN : MonoBehaviour
       float num3 = -Mathf.DeltaAngle((float) num1, (float) num2);
       Transform transform = ((Component) this).gameObject.transform;
       Quaternion rotation2 = ((Component) this).gameObject.transform.rotation;
-      rotation1 = ((Component) this).gameObject.transform.rotation;
-      Quaternion quaternion1 = Quaternion.Euler(0.0f, (float) ((double) ((Quaternion) ref rotation1).eulerAngles.y + (double) num3), 0.0f);
+      Quaternion rotation3 = ((Component) this).gameObject.transform.rotation;
+      Quaternion quaternion1 = Quaternion.Euler(0.0f, (float) ((double) ((Quaternion) ref rotation3).eulerAngles.y + (double) num3), 0.0f);
       double num4 = (double) this.speed * (double) Time.deltaTime;
       Quaternion quaternion2 = Quaternion.Lerp(rotation2, quaternion1, (float) num4);
       transform.rotation = quaternion2;
@@ -1608,17 +1608,13 @@ public class FEMALE_TITAN : MonoBehaviour
         }
         if ((double) this.attackCheckTimeA != 0.0 && ((double) ((Component) this).animation["attack_" + this.attackAnimation].normalizedTime >= (double) this.attackCheckTimeA && (double) ((Component) this).animation["attack_" + this.attackAnimation].normalizedTime <= (double) this.attackCheckTimeB || !this.attackChkOnce && (double) ((Component) this).animation["attack_" + this.attackAnimation].normalizedTime >= (double) this.attackCheckTimeA))
         {
-          int index;
           if (!this.attackChkOnce)
           {
             this.attackChkOnce = true;
-            index = Random.Range(1, 3);
-            this.playSound("snd_eren_swing" + index.ToString());
+            this.playSound("snd_eren_swing" + Random.Range(1, 3).ToString());
           }
-          RaycastHit[] raycastHitArray1 = this.checkHitCapsule(this.checkHitCapsuleStart.position, this.checkHitCapsuleEnd.position, this.checkHitCapsuleR);
-          for (index = 0; index < raycastHitArray1.Length; ++index)
+          foreach (RaycastHit raycastHit in this.checkHitCapsule(this.checkHitCapsuleStart.position, this.checkHitCapsuleEnd.position, this.checkHitCapsuleR))
           {
-            RaycastHit raycastHit = raycastHitArray1[index];
             GameObject gameObject = ((Component) ((RaycastHit) ref raycastHit).collider).gameObject;
             if (gameObject.tag == "Player")
               this.killPlayer(gameObject);
@@ -1638,10 +1634,8 @@ public class FEMALE_TITAN : MonoBehaviour
                 ((Component) gameObject.transform.root).gameObject.GetComponent<TITAN_EREN>().hitByFTByServer(3);
             }
           }
-          RaycastHit[] raycastHitArray2 = this.checkHitCapsule(this.checkHitCapsuleEndOld, this.checkHitCapsuleEnd.position, this.checkHitCapsuleR);
-          for (index = 0; index < raycastHitArray2.Length; ++index)
+          foreach (RaycastHit raycastHit in this.checkHitCapsule(this.checkHitCapsuleEndOld, this.checkHitCapsuleEnd.position, this.checkHitCapsuleR))
           {
-            RaycastHit raycastHit = raycastHitArray2[index];
             GameObject gameObject = ((Component) ((RaycastHit) ref raycastHit).collider).gameObject;
             if (gameObject.tag == "Player")
               this.killPlayer(gameObject);
@@ -1651,12 +1645,12 @@ public class FEMALE_TITAN : MonoBehaviour
         if (this.attackAnimation == "jumpCombo_1" && (double) ((Component) this).animation["attack_" + this.attackAnimation].normalizedTime >= 0.64999997615814209 && !this.startJump && Object.op_Inequality((Object) this.myHero, (Object) null))
         {
           this.startJump = true;
-          double y1 = (double) this.myHero.rigidbody.velocity.y;
+          float y1 = this.myHero.rigidbody.velocity.y;
           float num3 = -20f;
           float gravity = this.gravity;
           float y2 = ((Component) this).transform.Find("Amarture/Core/Controller_Body/hip/spine/chest/neck").position.y;
           float num4 = (float) (((double) num3 - (double) gravity) * 0.5);
-          float num5 = (float) y1;
+          float num5 = y1;
           float num6 = this.myHero.transform.position.y - y2;
           float num7 = Mathf.Abs((float) (((double) Mathf.Sqrt((float) ((double) num5 * (double) num5 - 4.0 * (double) num4 * (double) num6)) - (double) num5) / (2.0 * (double) num4)));
           Vector3 vector3_1 = Vector3.op_Addition(Vector3.op_Addition(this.myHero.transform.position, Vector3.op_Multiply(this.myHero.rigidbody.velocity, num7)), Vector3.op_Multiply(Vector3.op_Multiply(Vector3.op_Multiply(Vector3.op_Multiply(Vector3.up, 0.5f), num3), num7), num7));

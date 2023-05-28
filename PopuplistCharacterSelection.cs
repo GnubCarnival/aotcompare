@@ -16,18 +16,13 @@ public class PopuplistCharacterSelection : MonoBehaviour
   {
     string selection = ((Component) this).GetComponent<UIPopupList>().selection;
     HeroStat heroStat;
-    switch (selection)
+    if (selection == "Set 1" || selection == "Set 2" || selection == "Set 3")
     {
-      case "Set 1":
-      case "Set 2":
-      case "Set 3":
-        HeroCostume heroCostume = CostumeConeveter.LocalDataToHeroCostume(selection.ToUpper());
-        heroStat = heroCostume != null ? heroCostume.stat : new HeroStat();
-        break;
-      default:
-        heroStat = HeroStat.getInfo(((Component) this).GetComponent<UIPopupList>().selection);
-        break;
+      HeroCostume heroCostume = CostumeConeveter.LocalDataToHeroCostume(selection.ToUpper());
+      heroStat = heroCostume != null ? heroCostume.stat : new HeroStat();
     }
+    else
+      heroStat = HeroStat.getInfo(((Component) this).GetComponent<UIPopupList>().selection);
     this.SPD.transform.localScale = new Vector3((float) heroStat.SPD, 20f, 0.0f);
     this.GAS.transform.localScale = new Vector3((float) heroStat.GAS, 20f, 0.0f);
     this.BLA.transform.localScale = new Vector3((float) heroStat.BLA, 20f, 0.0f);
